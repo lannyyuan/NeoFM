@@ -1,9 +1,4 @@
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/brand/png/neofm-horizontal-white.png">
-    <img alt="NeoFM — Panel N" src="assets/brand/png/neofm-horizontal-black.png" width="420">
-  </picture>
-</p>
+![NeoFM — Panel N](assets/brand/png/neofm-logo-universal.png)
 
 <p align="center"><strong>现代终端文件管理器</strong><br>像 Vim 一样导航，像现代文档阅读器一样浏览。</p>
 

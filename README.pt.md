@@ -1,9 +1,4 @@
-<p align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/brand/png/neofm-horizontal-white.png">
-    <img alt="NeoFM — Panel N" src="assets/brand/png/neofm-horizontal-black.png" width="420">
-  </picture>
-</p>
+![NeoFM — Panel N](assets/brand/png/neofm-logo-universal.png)
 
 <p align="center"><strong>Gerenciador de arquivos moderno para terminal.</strong><br>Navegue como no Vim. Leia como em um visualizador moderno de documentos.</p>
 
