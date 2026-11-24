@@ -19,6 +19,10 @@
 
 NeoFM 将成熟的 **lf** 文件管理器与从 Codex TUI 抽取的独立 Rust Renderer 结合，为轻量、键盘优先的终端工作空间提供丰富的文档预览。大窗口预览交给各平台成熟的工具。不依赖 AI 服务，不重新发明终端，不强制使用云端账号。
 
+[![按 Space，在 macOS 原生 Quick Look 中浏览真实 PDF。NASA《Earth as Art》— 贝尔彻群岛。](assets/screenshots-r3/showcase/06-quicklook-pdf.png)](assets/screenshots-r3/raw/06-quicklook-pdf.png)
+
+*按 Space，在 macOS 原生 Quick Look 中浏览真实 PDF。NASA《Earth as Art》— 贝尔彻群岛。*
+
 ## 设计思想：少，但更好
 
 - **Unix KISS（Keep It Simple, Stupid）原则：** 每个组件只专注于自己的职责。lf 负责导航和文件操作，Renderer 负责有界终端渲染，原生工具负责大窗口预览。组合成熟部件，而非重复造轮子。
@@ -44,6 +48,30 @@ NeoFM 将成熟的 **lf** 文件管理器与从 Codex TUI 抽取的独立 Rust R
 | 图片 | PNG、JPEG、GIF 首帧、WebP；Sixel 或 ANSI | 外部大图窗口 |
 | 文本 / 代码 | 有界文本渲染 | 原生查看器 / 终端阅读器 |
 | PDF、Office、媒体 | 元数据与预览提示 | 取决于外部应用的格式支持 |
+
+## NeoFM 实际运行展示
+
+[![Markdown 实时预览 — 标题、列表与自适应表格。](assets/screenshots-r3/showcase/01-markdown.png)](assets/screenshots-r3/raw/01-markdown.png)
+
+*Markdown 实时预览 — 标题、列表与自适应表格。*
+
+[![数学与 Mermaid — 堆叠分式与终端流程图。](assets/screenshots-r3/showcase/02-math-mermaid.png)](assets/screenshots-r3/raw/02-math-mermaid.png)
+
+*数学与 Mermaid — 堆叠分式与终端流程图。*
+
+[![HTML Quick Look — 原生预览窗口中的本地网页。](assets/screenshots-r3/showcase/05-quicklook-html.png)](assets/screenshots-r3/raw/05-quicklook-html.png)
+
+*HTML Quick Look — 原生预览窗口中的本地网页。*
+
+[![Sixel 图片 — 真实终端图像，受 Renderer 像素预算限制。](assets/screenshots-r3/showcase/03-image.png)](assets/screenshots-r3/raw/03-image.png)
+
+*Sixel 图片 — 真实终端图像，受 Renderer 像素预算限制。*
+
+[![Markdown 代码 — Python 围栏代码块语法高亮，非独立源码高亮。](assets/screenshots-r3/showcase/04-source-code.png)](assets/screenshots-r3/raw/04-source-code.png)
+
+*Markdown 代码 — Python 围栏代码块语法高亮，非独立源码高亮。*
+
+真实 macOS 截图；Graphite / Menlo。NASA 影像署名详见 [截图说明与素材署名](docs/gallery.md).
 
 ## 推荐的全功能组合
 

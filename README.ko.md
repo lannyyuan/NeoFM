@@ -19,6 +19,10 @@
 
 NeoFM은 검증된 **lf** 파일 관리자와 Codex TUI에서 추출한 독립 Rust 렌더러를 결합하여 가볍고 키보드 중심인 터미널 작업 공간에 풍부한 문서 미리보기를 제공합니다. 큰 미리보기는 각 플랫폼의 기존 도구에 맡깁니다. AI 서비스, 새로운 터미널 에뮬레이터, 필수 클라우드 계정은 필요하지 않습니다.
 
+[![Space로 실제 PDF를 macOS Quick Look에서 봅니다. NASA 《Earth as Art》 — 벨처 제도.](assets/screenshots-r3/showcase/06-quicklook-pdf.png)](assets/screenshots-r3/raw/06-quicklook-pdf.png)
+
+*Space로 실제 PDF를 macOS Quick Look에서 봅니다. NASA 《Earth as Art》 — 벨처 제도.*
+
 ## 설계 철학 — 더 적게, 더 좋게
 
 - **Unix KISS(Keep It Simple, Stupid):** 각 구성 요소의 책임을 제한합니다. lf는 탐색과 파일 작업, 렌더러는 범위가 제한된 터미널 출력, 네이티브 도구는 큰 미리보기를 담당합니다. 검증된 도구를 조합하고 같은 기능을 다시 만들지 않습니다.
@@ -44,6 +48,30 @@ NeoFM은 검증된 **lf** 파일 관리자와 Codex TUI에서 추출한 독립 R
 | 이미지 | PNG, JPEG, GIF 첫 프레임, WebP; Sixel 또는 ANSI | 외부 전체 크기 뷰어 |
 | 텍스트 / 코드 | 제한된 텍스트 렌더링 | 네이티브 뷰어 / 터미널 리더 |
 | PDF, Office, 미디어 | 메타데이터와 미리보기 안내 | 외부 앱의 형식 지원에 따름 |
+
+## NeoFM 실제 실행 화면
+
+[![Markdown 실시간 미리보기 — 제목, 목록, 적응형 표.](assets/screenshots-r3/showcase/01-markdown.png)](assets/screenshots-r3/raw/01-markdown.png)
+
+*Markdown 실시간 미리보기 — 제목, 목록, 적응형 표.*
+
+[![수식과 Mermaid — 분수 렌더링과 터미널 흐름도.](assets/screenshots-r3/showcase/02-math-mermaid.png)](assets/screenshots-r3/raw/02-math-mermaid.png)
+
+*수식과 Mermaid — 분수 렌더링과 터미널 흐름도.*
+
+[![HTML Quick Look — 네이티브 미리보기 창의 로컬 HTML.](assets/screenshots-r3/showcase/05-quicklook-html.png)](assets/screenshots-r3/raw/05-quicklook-html.png)
+
+*HTML Quick Look — 네이티브 미리보기 창의 로컬 HTML.*
+
+[![Sixel 이미지 — 실제 터미널 그래픽이며 렌더러 픽셀 예산의 제한을 받습니다.](assets/screenshots-r3/showcase/03-image.png)](assets/screenshots-r3/raw/03-image.png)
+
+*Sixel 이미지 — 실제 터미널 그래픽이며 렌더러 픽셀 예산의 제한을 받습니다.*
+
+[![Markdown 코드 — Python 코드 블록 구문 강조이며 독립 소스 파일 강조는 아닙니다.](assets/screenshots-r3/showcase/04-source-code.png)](assets/screenshots-r3/raw/04-source-code.png)
+
+*Markdown 코드 — Python 코드 블록 구문 강조이며 독립 소스 파일 강조는 아닙니다.*
+
+실제 macOS 캡처. Graphite / Menlo. NASA 이미지 출처는 [캡처 기록 및 이미지 출처](docs/gallery.md).
 
 ## 권장 전체 기능 구성
 

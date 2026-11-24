@@ -19,6 +19,10 @@
 
 NeoFM verbindet den bewährten Dateimanager **lf** mit einem eigenständigen, aus der Codex-TUI extrahierten Rust-Renderer. So entstehen vielseitige Dokumentvorschauen in einer schlanken, tastaturorientierten Terminalumgebung. Große Vorschauen übernehmen vorhandene Werkzeuge der jeweiligen Plattform. Kein KI-Dienst, neuer Terminalemulator oder verpflichtendes Cloud-Konto.
 
+[![Mit Space ein echtes PDF in macOS Quick Look öffnen. NASA, Earth as Art — Belcherinseln.](assets/screenshots-r3/showcase/06-quicklook-pdf.png)](assets/screenshots-r3/raw/06-quicklook-pdf.png)
+
+*Mit Space ein echtes PDF in macOS Quick Look öffnen. NASA, Earth as Art — Belcherinseln.*
+
 ## Designphilosophie — weniger, aber besser
 
 - **Unix KISS (Keep It Simple, Stupid):** klare Aufgaben für jede Komponente. lf übernimmt Navigation und Dateioperationen, der Renderer begrenzte Terminalausgabe, native Werkzeuge große Vorschauen. Bewährte Werkzeuge kombinieren statt neu erfinden.
@@ -44,6 +48,30 @@ Das Standardverhältnis ist **1:2:4**: links das übergeordnete Verzeichnis, in 
 | Bilder | PNG, JPEG, erstes GIF-Bild, WebP; Sixel oder ANSI | Externer Großbildbetrachter |
 | Text / Code | Begrenzte Textdarstellung | Nativer Betrachter / Terminal-Reader |
 | PDF, Office, Medien | Metadaten und Vorschauhinweis | Abhängig von externen Formatunterstützungen |
+
+## NeoFM in Aktion
+
+[![Markdown-Live-Vorschau — Überschriften, Listen und adaptive Tabellen.](assets/screenshots-r3/showcase/01-markdown.png)](assets/screenshots-r3/raw/01-markdown.png)
+
+*Markdown-Live-Vorschau — Überschriften, Listen und adaptive Tabellen.*
+
+[![Mathematik und Mermaid — gesetzte Brüche und Flussdiagramme im Terminal.](assets/screenshots-r3/showcase/02-math-mermaid.png)](assets/screenshots-r3/raw/02-math-mermaid.png)
+
+*Mathematik und Mermaid — gesetzte Brüche und Flussdiagramme im Terminal.*
+
+[![HTML Quick Look — eine lokale HTML-Seite im nativen Vorschaufenster.](assets/screenshots-r3/showcase/05-quicklook-html.png)](assets/screenshots-r3/raw/05-quicklook-html.png)
+
+*HTML Quick Look — eine lokale HTML-Seite im nativen Vorschaufenster.*
+
+[![Sixel-Bilder — echte Terminalgrafik, begrenzt durch das Pixelbudget des Renderers.](assets/screenshots-r3/showcase/03-image.png)](assets/screenshots-r3/raw/03-image.png)
+
+*Sixel-Bilder — echte Terminalgrafik, begrenzt durch das Pixelbudget des Renderers.*
+
+[![Markdown-Code — Syntaxhervorhebung eines Python-Codeblocks, nicht einer eigenständigen Quelldatei.](assets/screenshots-r3/showcase/04-source-code.png)](assets/screenshots-r3/raw/04-source-code.png)
+
+*Markdown-Code — Syntaxhervorhebung eines Python-Codeblocks, nicht einer eigenständigen Quelldatei.*
+
+Echte macOS-Aufnahmen; Graphite / Menlo. NASA-Bildnachweise: [Aufnahmehinweise und Bildnachweise](docs/gallery.md).
 
 ## Empfohlene vollständige Konfiguration
 

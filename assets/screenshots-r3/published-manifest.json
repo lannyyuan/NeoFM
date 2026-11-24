@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "round": "R3",
+  "capture_date": "2026-11-25",
+  "environment": {
+    "app": "NeoFM 0.2.1 (installed)",
+    "terminal": "iTerm2 3.7.9",
+    "os": "macOS 26.6.2 (25G83), Apple Silicon",
+    "pane_ratio": "1:2:4",
+    "theme": "Graphite",
+    "font": "Menlo Regular 21 pt",
+    "vertical_spacing": 1.02,
+    "profiles": "temporary iTerm2 Dynamic Profiles removed after capture"
+  },
+  "hero": "showcase/06-quicklook-pdf.png",
+  "entries": [
+    {
+      "id": "S01",
+      "title": "Markdown",
+      "rendering": "NeoFM formatted Markdown and adaptive table",
+      "capture": "direct iTerm2 window",
+      "status": "captured and reviewed",
+      "raw": {
+        "path": "raw/01-markdown.png",
+        "dimensions_px": {
+          "width": 1680,
+          "height": 1020
+        },
+        "sha256": "29e1bb82d5f5b80e09ceee4397f29af4819884603a64c027efe0fdc3a9b77b77"
+      },
+      "showcase": {
+        "path": "showcase/01-markdown.png",
+        "dimensions_px": {
+          "width": 1776,
+          "height": 1104
+        },
+        "sha256": "6c5e09c0472e6783cefca827f1ce42f6e5595a915fa9be7b337b32eb774d164e"
+      }
+    },
+    {
+      "id": "S02",
+      "title": "Mathematics and Mermaid",
+      "rendering": "NeoFM native stacked fractions and terminal Mermaid layout",
+      "capture": "direct iTerm2 window",
+      "status": "captured and reviewed",
+      "raw": {
+        "path": "raw/02-math-mermaid.png",
+        "dimensions_px": {
+          "width": 1680,
+          "height": 1020
+        },
+        "sha256": "48ae65cd72a4d5b79aab42fdcd15686b5e3d9a83e5447aa08392790e3194ffd5"
+      },
+      "showcase": {
+        "path": "showcase/02-math-mermaid.png",
+        "dimensions_px": {
+          "width": 1776,
+          "height": 1104
+        },
+        "sha256": "cb90c26844a553cfc9f8011f1fcbcdf7c73ae59d8358cd702c7b527015733847"
+      }
+    },
+    {
+      "id": "S03",
+      "title": "Sixel image",
+      "rendering": "Native iTerm2 Sixel; 384 x 288 raster; NASA Earth as Art Bombetoka Bay derivative cropped before viewing",
+      "capture": "direct iTerm2 window",
+      "status": "captured and reviewed",
+      "raw": {
+        "path": "raw/03-image.png",
+        "dimensions_px": {
+          "width": 1440,
+          "height": 900
+        },
+        "sha256": "2c52bdfa43ed34abaeec41d79bb663be86927235eea0998eba461634f84e509a"
+      },
+      "showcase": {
+        "path": "showcase/03-image.png",
+        "dimensions_px": {
+          "width": 1536,
+          "height": 984
+        },
+        "sha256": "04808fab239844267969e6bd4b989d1f0029c29bbd41147dc73a08d873c329ff"
+      }
+    },
+    {
+      "id": "S04",
+      "title": "Markdown code preview",
+      "rendering": "NeoFM syntax-highlighted Python fence in a Markdown file, not standalone file highlighting",
+      "capture": "direct iTerm2 window",
+      "status": "captured and reviewed",
+      "raw": {
+        "path": "raw/04-source-code.png",
+        "dimensions_px": {
+          "width": 1680,
+          "height": 1020
+        },
+        "sha256": "71bb99a69e8717dd6d8b5a8a52eead6037c7538b71920cc8f15ed211038c8bb4"
+      },
+      "showcase": {
+        "path": "showcase/04-source-code.png",
+        "dimensions_px": {
+          "width": 1776,
+          "height": 1104
+        },
+        "sha256": "04ed9adeeac581a301670214fa6ec1c3f3a7da4eb5b8b9bf6a9be5055527a72c"
+      }
+    },
+    {
+      "id": "S05",
+      "title": "HTML Quick Look",
+      "rendering": "macOS Quick Look, Space -> /usr/bin/qlmanage -p -x; unchanged HTML, no browser",
+      "capture": "single live Desktop capture clipped to iTerm2 window",
+      "status": "captured and reviewed",
+      "raw": {
+        "path": "raw/05-quicklook-html.png",
+        "dimensions_px": {
+          "width": 1680,
+          "height": 1020
+        },
+        "sha256": "b375c8cb2843e4e5867caa8136365aeb93641a26fbe976d8b113a0ac1a8bbed2"
+      },
+      "showcase": {
+        "path": "showcase/05-quicklook-html.png",
+        "dimensions_px": {
+          "width": 1776,
+          "height": 1104
+        },
+        "sha256": "9fb681d88a52c613c2c0d79a5ecbd5de63a39afff44e077f8c6a96c22c1d7cc1"
+      }
+    },
+    {
+      "id": "S06",
+      "title": "PDF Quick Look",
+      "rendering": "macOS Quick Look, Space -> /usr/bin/qlmanage -p; page 25, Belcher Islands, thumbnail rail and status count visible",
+      "capture": "single live Desktop capture clipped to iTerm2 window",
+      "status": "captured and reviewed",
+      "raw": {
+        "path": "raw/06-quicklook-pdf.png",
+        "dimensions_px": {
+          "width": 1680,
+          "height": 1020
+        },
+        "sha256": "f8acd95b8b4df5605e585cbe4d0eadcc444b83be486a8dd67239e006bff4288e"
+      },
+      "showcase": {
+        "path": "showcase/06-quicklook-pdf.png",
+        "dimensions_px": {
+          "width": 1776,
+          "height": 1104
+        },
+        "sha256": "47d0365eb69db4504d9bfb9aabdbe2558bab8dbf14f92efaba19ffd04f87ed17"
+      }
+    }
+  ],
+  "provenance": "Derived from the local R3 capture manifest; final images are unchanged. Intermediate candidates and demo source files are retained locally."
+}

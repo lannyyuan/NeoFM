@@ -19,6 +19,10 @@
 
 NeoFM brings rich document previews to a lightweight, keyboard-first terminal workspace. It combines the proven **lf** file manager with a standalone Rust renderer extracted from the Codex TUI, and delegates larger previews to the platform's own tools. No AI service, new terminal emulator, or mandatory cloud account.
 
+[![Press Space to preview a real PDF in macOS Quick Look. NASA Earth as Art — Belcher Islands.](assets/screenshots-r3/showcase/06-quicklook-pdf.png)](assets/screenshots-r3/raw/06-quicklook-pdf.png)
+
+*Press Space to preview a real PDF in macOS Quick Look. NASA Earth as Art — Belcher Islands.*
+
 ## Design philosophy — less, but better
 
 - **Unix KISS (Keep It Simple, Stupid):** keep each component focused. lf handles navigation and file operations; the renderer produces bounded terminal output; native tools handle larger previews. Compose working tools instead of rebuilding them.
@@ -44,6 +48,30 @@ The default ratio is **1:2:4**: parent directory (left), current directory and s
 | Images | PNG, JPEG, GIF first frame, WebP; Sixel or ANSI | External full-size viewer |
 | Text / code | Bounded text rendering | Native viewer / terminal reader |
 | PDF, Office, media | Metadata and preview hint | Format support depends on external app |
+
+## See NeoFM in action
+
+[![Live Markdown — formatted headings, lists and adaptive tables.](assets/screenshots-r3/showcase/01-markdown.png)](assets/screenshots-r3/raw/01-markdown.png)
+
+*Live Markdown — formatted headings, lists and adaptive tables.*
+
+[![Math & Mermaid — stacked fractions and terminal flowcharts.](assets/screenshots-r3/showcase/02-math-mermaid.png)](assets/screenshots-r3/raw/02-math-mermaid.png)
+
+*Math & Mermaid — stacked fractions and terminal flowcharts.*
+
+[![HTML Quick Look — a local HTML page in the native preview window.](assets/screenshots-r3/showcase/05-quicklook-html.png)](assets/screenshots-r3/raw/05-quicklook-html.png)
+
+*HTML Quick Look — a local HTML page in the native preview window.*
+
+[![Sixel images — actual terminal graphics, subject to the renderer's pixel budget.](assets/screenshots-r3/showcase/03-image.png)](assets/screenshots-r3/raw/03-image.png)
+
+*Sixel images — actual terminal graphics, subject to the renderer's pixel budget.*
+
+[![Markdown code — syntax-highlighted Python fenced code, not standalone source highlighting.](assets/screenshots-r3/showcase/04-source-code.png)](assets/screenshots-r3/raw/04-source-code.png)
+
+*Markdown code — syntax-highlighted Python fenced code, not standalone source highlighting.*
+
+Actual macOS captures; Graphite / Menlo. NASA imagery credited in [Capture notes & image credits](docs/gallery.md).
 
 ## Recommended complete setup
 

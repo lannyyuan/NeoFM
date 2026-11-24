@@ -19,6 +19,10 @@
 
 NeoFM combina o gerenciador de arquivos consolidado **lf** com um renderizador Rust independente extraído da TUI do Codex. Oferece prévias ricas em um espaço de trabalho leve e centrado no teclado, delegando prévias maiores às ferramentas de cada plataforma. Sem serviço de IA, novo emulador de terminal ou conta obrigatória na nuvem.
 
+[![Pressione Space para ver um PDF real no Quick Look do macOS. NASA, Earth as Art — ilhas Belcher.](assets/screenshots-r3/showcase/06-quicklook-pdf.png)](assets/screenshots-r3/raw/06-quicklook-pdf.png)
+
+*Pressione Space para ver um PDF real no Quick Look do macOS. NASA, Earth as Art — ilhas Belcher.*
+
 ## Filosofia de design — menos, porém melhor
 
 - **KISS do Unix (Keep It Simple, Stupid):** cada componente tem uma responsabilidade específica. lf cuida da navegação e das operações com arquivos; o renderizador produz saída limitada no terminal; ferramentas nativas cuidam das prévias maiores. Combine ferramentas consolidadas em vez de reinventá-las.
@@ -44,6 +48,30 @@ A proporção padrão é **1:2:4**: diretório pai à esquerda, diretório atual
 | Imagens | PNG, JPEG, primeiro quadro GIF, WebP; Sixel ou ANSI | Visualizador externo em tamanho maior |
 | Texto / código | Renderização de texto limitada | Visualizador nativo / leitor de terminal |
 | PDF, Office, mídia | Metadados e indicação de prévia | Depende dos formatos do aplicativo externo |
+
+## NeoFM em ação
+
+[![Prévia Markdown — títulos, listas e tabelas adaptativas.](assets/screenshots-r3/showcase/01-markdown.png)](assets/screenshots-r3/raw/01-markdown.png)
+
+*Prévia Markdown — títulos, listas e tabelas adaptativas.*
+
+[![Matemática e Mermaid — frações empilhadas e fluxogramas no terminal.](assets/screenshots-r3/showcase/02-math-mermaid.png)](assets/screenshots-r3/raw/02-math-mermaid.png)
+
+*Matemática e Mermaid — frações empilhadas e fluxogramas no terminal.*
+
+[![Quick Look HTML — uma página HTML local na janela nativa.](assets/screenshots-r3/showcase/05-quicklook-html.png)](assets/screenshots-r3/raw/05-quicklook-html.png)
+
+*Quick Look HTML — uma página HTML local na janela nativa.*
+
+[![Imagens Sixel — gráficos reais no terminal, limitados pelo orçamento de pixels.](assets/screenshots-r3/showcase/03-image.png)](assets/screenshots-r3/raw/03-image.png)
+
+*Imagens Sixel — gráficos reais no terminal, limitados pelo orçamento de pixels.*
+
+[![Código Markdown — destaque de um bloco Python, não de um arquivo-fonte independente.](assets/screenshots-r3/showcase/04-source-code.png)](assets/screenshots-r3/raw/04-source-code.png)
+
+*Código Markdown — destaque de um bloco Python, não de um arquivo-fonte independente.*
+
+Capturas reais do macOS; Graphite / Menlo. Créditos da NASA: [Notas de captura e créditos](docs/gallery.md).
 
 ## Configuração completa recomendada
 

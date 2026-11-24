@@ -19,6 +19,10 @@
 
 NeoFM は、実績のある **lf** ファイルマネージャーと Codex TUI から抽出した独立した Rust レンダラーを組み合わせ、軽量でキーボード中心のターミナル環境に豊かな文書プレビューを提供します。大型プレビューは各 OS の既存ツールに任せます。AI サービス、新しいターミナルエミュレーター、必須のクラウドアカウントは不要です。
 
+[![Space で実際の PDF を macOS Quick Look に表示。NASA『Earth as Art』— ベルチャー諸島。](assets/screenshots-r3/showcase/06-quicklook-pdf.png)](assets/screenshots-r3/raw/06-quicklook-pdf.png)
+
+*Space で実際の PDF を macOS Quick Look に表示。NASA『Earth as Art』— ベルチャー諸島。*
+
 ## 設計思想 — より少なく、より良く
 
 - **Unix KISS（Keep It Simple, Stupid）：** コンポーネントの責務を限定します。lf は移動とファイル操作、レンダラーは出力範囲を制限した端末描画、ネイティブツールは大型プレビューを担当します。既存の優れたツールを組み合わせ、車輪を再発明しません。
@@ -44,6 +48,30 @@ NeoFM は、実績のある **lf** ファイルマネージャーと Codex TUI �
 | 画像 | PNG、JPEG、GIF の先頭フレーム、WebP；Sixel または ANSI | 外部の大型ビューアー |
 | テキスト / コード | 範囲を制限したテキスト描画 | ネイティブビューアー / 端末リーダー |
 | PDF、Office、メディア | メタデータとプレビュー案内 | 外部アプリの対応形式に依存 |
+
+## NeoFM の実際の画面
+
+[![Markdown ライブプレビュー — 見出し、リスト、可変幅テーブル。](assets/screenshots-r3/showcase/01-markdown.png)](assets/screenshots-r3/raw/01-markdown.png)
+
+*Markdown ライブプレビュー — 見出し、リスト、可変幅テーブル。*
+
+[![数式と Mermaid — 分数の組版と端末のフローチャート。](assets/screenshots-r3/showcase/02-math-mermaid.png)](assets/screenshots-r3/raw/02-math-mermaid.png)
+
+*数式と Mermaid — 分数の組版と端末のフローチャート。*
+
+[![HTML Quick Look — ネイティブプレビューに表示したローカル HTML。](assets/screenshots-r3/showcase/05-quicklook-html.png)](assets/screenshots-r3/raw/05-quicklook-html.png)
+
+*HTML Quick Look — ネイティブプレビューに表示したローカル HTML。*
+
+[![Sixel 画像 — 実際の端末画像描画。レンダラーの画素数制限あり。](assets/screenshots-r3/showcase/03-image.png)](assets/screenshots-r3/raw/03-image.png)
+
+*Sixel 画像 — 実際の端末画像描画。レンダラーの画素数制限あり。*
+
+[![Markdown コード — Python のフェンス付きコードブロックの構文強調。単独のソースファイルではありません。](assets/screenshots-r3/showcase/04-source-code.png)](assets/screenshots-r3/raw/04-source-code.png)
+
+*Markdown コード — Python のフェンス付きコードブロックの構文強調。単独のソースファイルではありません。*
+
+実際の macOS 画面。Graphite / Menlo。NASA 画像の出典は [撮影記録と画像クレジット](docs/gallery.md).
 
 ## 推奨するフル機能構成
 
