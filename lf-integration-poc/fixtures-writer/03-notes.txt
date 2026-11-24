@@ -1,0 +1,2 @@
+SECOND_FILE_CONTENT
+hello from plain text

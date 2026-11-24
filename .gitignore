@@ -1,0 +1,9 @@
+target/
+dist/
+*.snap.new
+__pycache__/
+.DS_Store
+.env
+*.log
+*.raw
+*.pyc

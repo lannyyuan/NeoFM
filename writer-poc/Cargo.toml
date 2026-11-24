@@ -1,0 +1,27 @@
+[package]
+name = "lf-preview-poc"
+version = "0.1.0"
+edition = "2024"
+publish = false
+license = "Apache-2.0"
+
+[dependencies]
+itertools = "=0.14.0"
+pulldown-cmark = { version = "=0.10.3", default-features = false }
+ratatui = { version = "=0.30.2", default-features = false }
+syntect = { version = "=5.3.0", default-features = false, features = ["parsing", "plist-load", "regex-onig"] }
+textwrap = "=0.16.2"
+two-face = { version = "=0.5.1", default-features = false, features = ["syntect-onig"] }
+unicode-segmentation = "1"
+unicode-width = "=0.2.1"
+url = "2"
+percent-encoding = "=2.3.2"
+regex = { version = "=1.13.1", default-features = false, features = ["std", "perf"] }
+
+tracing = "=0.1.44"
+
+codex-mermaid = { path = "vendor/codex-mermaid" }
+
+[dev-dependencies]
+insta = "=1.48.0"
+pretty_assertions = "=1.4.1"

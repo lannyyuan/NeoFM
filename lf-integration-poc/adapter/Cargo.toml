@@ -1,0 +1,15 @@
+[package]
+name = "lfpreview"
+version = "0.1.0"
+edition = "2024"
+license = "Apache-2.0"
+[dependencies]
+ratatui = { version = "=0.30.2", default-features = false }
+pulldown-cmark = { version = "=0.10.3", default-features = false }
+unicode-width = "=0.2.1"
+image = { version = "=0.25.10", default-features = false, features = ["png","jpeg","gif","webp"] }
+anyhow = "1"
+libc = "0.2"
+lf-preview-poc = { path = "../../writer-poc" }
+[dev-dependencies]
+pretty_assertions = "1.4.1"
