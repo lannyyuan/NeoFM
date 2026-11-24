@@ -1,78 +1,102 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="assets/brand/png/neofm-horizontal-white.png">
-    <img alt="NeoFM — Panel N logo" src="assets/brand/png/neofm-horizontal-black.png" width="420">
+    <img alt="NeoFM — Panel N" src="assets/brand/png/neofm-horizontal-black.png" width="420">
   </picture>
 </p>
 
 <p align="center"><strong>Modern terminal file manager.</strong><br>Navigate like Vim. Read like a modern document viewer.</p>
 
-<p align="center">
-  <a href="README.zh-CN.md">简体中文</a> · English ·
-  <a href="#quick-start">Quick start</a> ·
-  <a href="docs/architecture.md">Architecture</a> ·
-  <a href="docs/validation.md">Validation</a>
-</p>
+**English** · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Español](README.es.md) · [Português](README.pt.md) · [Italiano](README.it.md) · [Русский](README.ru.md)
 
 <p align="center">
   <img alt="Version 0.2.1" src="https://img.shields.io/badge/version-0.2.1-171717?style=flat-square">
   <img alt="macOS · Windows · Linux" src="https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-555555?style=flat-square">
-  <img alt="Rust and Go" src="https://img.shields.io/badge/core-Rust%20%2B%20Go-444444?style=flat-square">
+  <img alt="Rust + Go" src="https://img.shields.io/badge/core-Rust%20%2B%20Go-444444?style=flat-square">
 </p>
 
 ---
 
-NeoFM brings modern document previews to a small, keyboard-first terminal workspace. It pairs the proven **lf** navigation engine with an independent Rust renderer extracted from the Codex TUI, then delegates large previews to the operating system's native or separately installed preview app.
+NeoFM brings rich document previews to a lightweight, keyboard-first terminal workspace. It combines the proven **lf** file manager with a standalone Rust renderer extracted from the Codex TUI, and delegates larger previews to the platform's own tools. No AI service, new terminal emulator, or mandatory cloud account.
 
-No AI service. No new terminal emulator. No mandatory cloud account. Just your files and your keyboard.
+## Design philosophy — less, but better
 
-## Two levels of preview
+- **Unix KISS (Keep It Simple, Stupid):** keep each component focused. lf handles navigation and file operations; the renderer produces bounded terminal output; native tools handle larger previews. Compose working tools instead of rebuilding them.
+- **Inspired by [suckless](https://suckless.org/):** small, understandable components, few dependencies, keyboard-first operation and deliberate restraint. NeoFM is inspired by the philosophy, not an official suckless project.
+- **Taste through subtraction:** no splash screen, decorative dashboard, unnecessary buttons, embedded browser or AI harness. Keep the logo in project materials, not in the terminal workspace. Add a feature only when it improves a frequent workflow.
+- **Consistent behavior, native implementation:** the same layout and Vim keymap on macOS, Windows and Linux; use the mature preview and Trash mechanisms of each OS. Local files stay local.
 
-| | **Live sidebar** | **Space — Quick Look** |
+## One layout, three platforms
+
+~~~text
+┌────────────┬────────────────────────┬────────────────────────────────────────────────┐
+│     1      │           2            │                       4                        │
+│     ↑      │           →            │                       ◇                        │
+└────────────┴────────────────────────┴────────────────────────────────────────────────┘
+                 set ratios 1:2:4
+~~~
+
+The default ratio is **1:2:4**: parent directory (left), current directory and selection (center), live preview (right). The preview gets the largest share; no separate editor or permanently occupied toolbar. Hidden entries are visible by default; use zh to toggle them. The layout is controlled by the platform launchers, not a new terminal UI framework.
+
+| Content | Live sidebar | Space — large preview |
 |:--|:--|:--|
-| Markdown | Headings, lists, tables, code, math, Mermaid | Native preview where supported |
-| Images | PNG, JPEG, GIF (first frame), WebP | External full-size viewer |
-| Text and code | Bounded terminal rendering | Native viewer / terminal reader |
-| PDF, Office, media | Metadata and preview hint | System or external preview app |
+| Markdown | Headings, lists, adaptive tables, CJK, highlighted code, math, Mermaid | Native viewer where supported |
+| Images | PNG, JPEG, GIF first frame, WebP; Sixel or ANSI | External full-size viewer |
+| Text / code | Bounded text rendering | Native viewer / terminal reader |
+| PDF, Office, media | Metadata and preview hint | Format support depends on external app |
 
-### Why NeoFM?
+## Recommended complete setup
 
-- **Vim muscle memory** — familiar navigation and simple file operations.
-- **Real Markdown rendering** — adaptive tables, CJK text, code highlighting, math, and Mermaid.
-- **Terminal graphics** — Sixel where supported; ANSI fallback for other terminals.
-- **Recoverable deletion** — explicit confirmation before moving files to Trash / Recycle Bin.
-- **Native integration** — no heavyweight GUI runtime required by the core.
+| Platform | Terminal / desktop | Space | Trash |
+|:--|:--|:--|:--|
+| macOS ARM64 | [iTerm2](https://iterm2.com/) (Sixel) or Terminal (ANSI) | Built-in Quick Look | System trash |
+| Windows x64 | Recent Sixel-capable [Windows Terminal](https://github.com/microsoft/terminal); PowerShell or CMD | [QL-Win QuickLook](https://github.com/QL-Win/QuickLook), separately installed | Windows Recycle Bin |
+| Linux x64 desktop | [DWM](https://dwm.suckless.org/) / [st](https://st.suckless.org/) or another terminal; Sixel-capable terminal for raster graphics | [Dzurkel](https://github.com/EdinUser/dzurkel) | gio / trash-put |
+| Linux headless / SSH | Existing terminal; less recommended | Terminal text/metadata | gio / trash-put |
 
-## Platform support
+These are recommended combinations, not mandatory desktop environments. The core requires no Qt. On terminals without Sixel, or in tmux/screen, use ANSI fallback. Choose LFP_IMAGE_BACKEND=auto, ansi, sixel or none; only force sixel on a compatible terminal.
 
-| Platform | Native large preview | Status |
-|:--|:--|:--|
-| macOS ARM64 | macOS Quick Look | Deployed |
-| Windows x64 | [QuickLook](https://github.com/QL-Win/QuickLook) | Deployed |
-| Linux x64 desktop | [Dzurkel](https://github.com/EdinUser/dzurkel) | Deployed on CachyOS / DWM |
-| Linux headless / SSH | Terminal text/metadata fallback | Deployed on Debian NUC |
+## Build and run
 
-Status describes previous tested installations; see [validation details](docs/validation.md). Full PDF/Office rendering over headless SSH and interactive sidebar tabs are not implemented.
+Use Go 1.26+ and Rust/Cargo 1.94+ on the target platform; Windows also requires MSVC build tools. The first build downloads locked dependencies. This is a private development repository, not a public package release; cloning requires authorized GitHub access.
 
-## Quick start
-
-Build from source on the target machine with **Go 1.26+** and **Rust/Cargo 1.94+**. Windows requires an MSVC toolchain. The first build downloads locked dependencies. This is a private development repository, not a public package registry release.
-
-**macOS / Linux**
+### macOS / Linux
 
 ~~~sh
 git clone https://github.com/lannyyuan/NeoFM.git
 cd NeoFM
 ./scripts/build.sh
-# macOS Apple Silicon
+
+# macOS / Apple Silicon
 ./dist/neofm-macos-arm64/bin/neofm
-# Linux x86_64
+
+# Linux / x86_64
 ./dist/neofm-linux-x64/bin/neofm
 ~~~
 
-On Linux, install Dzurkel separately if you want graphical Quick Look. Use gio or trash-put for recoverable deletion and less for the terminal reader. The core does not require Qt. For a user-local command, symlink the chosen build's bin/neofm into ~/.local/bin (without overwriting an existing command).
+Use the launchers, not bare lf. To create a user-local command, link the chosen build's bin/neofm into ~/.local/bin without overwriting an existing entry. Keep the existing terminal and window manager.
 
-**Windows (PowerShell)**
+**macOS:** no extra Quick Look app is required. The launcher uses /usr/bin/qlmanage -p; iTerm2 is recommended for Sixel, while the system Terminal can use ANSI.
+
+~~~sh
+# Optional: prefer Sixel only in a compatible terminal
+LFP_IMAGE_BACKEND=auto ./dist/neofm-macos-arm64/bin/neofm
+# Inspect the native preview command
+command -v qlmanage
+~~~
+
+**Linux:** install Dzurkel separately for graphical previews, with compatible Qt dependencies. On DWM/st without Sixel support, ANSI still works. Check the following tools; install missing tools using the distribution's package manager. The Linux launcher uses Dzurkel only in a local graphical session; ordinary SSH uses terminal fallback. If Qt compatibility is a problem, provision an isolated compatible Dzurkel runtime rather than upgrading the whole desktop just for NeoFM.
+
+~~~sh
+command -v dzurkel
+command -v gio || command -v trash-put
+command -v less
+command -v xdg-open
+~~~
+
+### Windows — the complete combination
+
+Install Windows Terminal (a version supporting Sixel), [QuickLook](https://github.com/QL-Win/QuickLook) and the native build tools above. QuickLook is a third-party Windows app, not built into Windows. Install and launch it once in your desktop session, then build NeoFM.
 
 ~~~powershell
 git clone https://github.com/lannyyuan/NeoFM.git
@@ -81,50 +105,75 @@ powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1
 .\dist\NeoFM-win-x64\neofm.cmd
 ~~~
 
-Install QuickLook separately. The launcher defaults to the standard user installation path; set LFP_QUICKLOOK_EXE to its full executable path if needed. The launcher supplies the Windows CMD search path without editing global environment variables.
+**Configure QuickLook:** the launcher defaults to %LOCALAPPDATA%\Programs\QuickLook\QuickLook.exe. Other installation methods may use a different path. In PowerShell, set and check the full EXE path, replacing it if needed:
+
+~~~powershell
+$env:LFP_QUICKLOOK_EXE = Join-Path $env:LOCALAPPDATA "Programs\QuickLook\QuickLook.exe"
+Test-Path -LiteralPath $env:LFP_QUICKLOOK_EXE
+# If False, replace the value with the actual full EXE path.
+# Optional direct QuickLook test from the repository root (uncomment):
+# & $env:LFP_QUICKLOOK_EXE (Resolve-Path ".\dist\NeoFM-win-x64\samples\fixtures-quicklook\01 sample 中文.pdf").Path
+# Run from the NeoFM repository root:
+.\dist\NeoFM-win-x64\neofm.cmd
+~~~
+
+CMD equivalent:
+
+~~~bat
+set "LFP_QUICKLOOK_EXE=%LOCALAPPDATA%\Programs\QuickLook\QuickLook.exe"
+if exist "%LFP_QUICKLOOK_EXE%" echo QuickLook OK
+where cmd.exe
+.\dist\NeoFM-win-x64\neofm.cmd
+~~~
+
+**Important:** always start neofm.cmd rather than lf.exe. The launcher explicitly supplies System32, ComSpec and PATHEXT in its own process; it does not change global PATH. The internal lf shell remains CMD even when you launch from PowerShell 5.1 or 7.x. If Space marks a file instead of opening QuickLook, the custom lfrc may not have loaded. If you see 'exec: "cmd": executable file not found in %PATH%', restart through the launcher and check System32. Verify that QuickLook opens a known PDF directly, then try Space on the same file. For diagnostics and ANSI image fallback:
+
+~~~powershell
+Get-Content "$env:LOCALAPPDATA\LFpreview\data\lfwin.log" -Tail 30
+$env:LFP_IMAGE_BACKEND = "ansi"
+.\dist\NeoFM-win-x64\neofm.cmd
+~~~
+
+The dd adapter uses Windows PowerShell 5.1 and the native Shell API; confirm with a disposable file on a local fixed drive. QuickLook format plugins/codecs and terminal pixel fidelity are separate from NeoFM's core. The portable path generalization still needs full GUI regression; see validation.
 
 ## Keymap
 
 | Key | Action | Key | Action |
 |:--|:--|:--|:--|
-| h / j / k / l | Navigate | Space | Quick Look |
-| Enter | Select file / enter folder | Ctrl+Space | Toggle selection |
-| yy | Copy | p | Paste |
-| x | Cut | dd | Confirm and trash |
-| o | External open | zh | Toggle hidden entries |
-| gg / G | First / last entry | / | Search |
-| r | Rename | q | Quit |
+| `h / j / k / l` | Navigate | `Space` | Quick Look |
+| `Enter` | Mark/unmark file; enter folder | `Ctrl+Space` | Toggle mark |
+| `yy` | Copy | `p` | Paste |
+| `x` | Cut | `dd` | Confirm, then trash |
+| `o` | External open | `zh` | Toggle hidden entries |
+| `gg / G` | First / last | `/` | Search |
+| `r` | Rename | `q` | Quit |
 
-Hidden entries are shown by default. File actions target marked files when present, otherwise the current file. The native trash backend must support the operation; there is no deliberate permanent-delete fallback.
+Marked files take precedence; otherwise operate on the current file. dd asks for confirmation and has no intentional permanent-delete fallback when native Trash is unavailable.
 
-## Architecture
+## Architecture and validation
 
 ~~~text
-                    NeoFM launcher
-                           │
-                    lf navigation
-                    ┌──────┴──────┐
-                    │             │
-            Live preview          Space
-                    │             │
-              Rust renderer       Native Quick Look
-            ┌───────┴──────┐      / terminal fallback
-         Markdown       Images
-         math/Mermaid    Sixel/ANSI
+                  NeoFM launcher
+                        │
+                   lf (Go)
+             ┌──────────┴───────────┐
+             │                      │
+    lfpreview (Rust)               Space
+       ┌─────┴─────┐                │
+   Markdown      Images       Native preview
+   Math/Mermaid  Sixel/ANSI   / terminal fallback
 ~~~
 
-One shared source tree. Platform-specific launchers and native preview integrations. See [architecture](docs/architecture.md) and [source provenance](UPSTREAM.md).
-
-## Development
+One shared source tree, separate platform launchers. See [architecture](docs/architecture.md), [validation](docs/validation.md) and [source provenance](UPSTREAM.md).
 
 ~~~sh
 cargo test --locked --manifest-path lf-integration-poc/adapter/Cargo.toml
 ~~~
 
-The repository contains the pinned lf source, extracted writer, preview adapter, platform scripts, synthetic fixtures, build scripts and the NeoFM [brand assets](assets/brand/). Three known upstream-derived Writer regression failures are documented separately; do not confuse the adapter's passing tests with complete upstream parity.
+Unified native Rust releases passed four renderer smoke tests on Mac ARM64, Windows x64 and Linux x64; the Mac adapter passed 19/19. Previous deployments also exercised native preview and Trash on real platforms. The adapted Writer has three known upstream-derived failures; full upstream parity, complete GUI retest, interactive sidebar tabs and full PDF/Office or high-resolution graphics over headless SSH are not claimed.
 
-## Credits & license
+## Credits and license
 
-Built on [lf](https://github.com/gokcehan/lf) and renderer components from [OpenAI Codex](https://github.com/openai/codex), with separately installed QuickLook and Dzurkel. NeoFM is an independent project, not an official upstream product. See [LICENSE](LICENSE), [NOTICE](NOTICE), [lf's MIT license](lf-upstream/LICENSE) and [UPSTREAM.md](UPSTREAM.md).
+Built on [lf](https://github.com/gokcehan/lf) (MIT) and extracted components of [OpenAI Codex](https://github.com/openai/codex) (Apache-2.0). QuickLook and Dzurkel are separately installed; not bundled. NeoFM is independent of upstream projects. See [LICENSE](LICENSE), [NOTICE](NOTICE), [lf license](lf-upstream/LICENSE), [UPSTREAM.md](UPSTREAM.md) and [brand assets](assets/brand/).
 
 <p align="center"><sub>Small tools. Clear files. Native previews.</sub></p>
