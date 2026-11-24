@@ -12,7 +12,15 @@ Native applications were installed on Mac M4, Windows x64, Debian 13 NUC, and Ca
 
 ## Unified repository
 
-See the latest commit and the integration test results recorded below. The existing binaries on the four hosts have not been replaced by this consolidation alone.
+Tested source commit: a64669cea7844d1c3bfa817eb9243ac82bb7182f (the three-platform consolidation). Actual native offline Rust release builds on Mac M4 arm64, Windows x64 MSVC, and Debian NUC x86_64 succeeded. All used the same source snapshot and locked dependencies.
+
+| Host | Native release renderer build | Smoke tests |
+|---|---|---|
+| macOS ARM64 | PASS | 4/4 |
+| Windows x64 | PASS | 4/4 |
+| Linux x86_64 (NUC) | PASS | 4/4 |
+
+The four checks per host exercise the real compiled binary: Markdown table, math/Mermaid, Sixel frame, ANSI image fallback. The merged adapter unit tests ran on Mac: 19/19. No full upstream Writer parity claim. The existing binaries on the four hosts have not been replaced by this consolidation alone. The new full Go + Rust packaging scripts and portable Windows QuickLook path generalization have not received a complete end-to-end GUI retest.
 
 To rerun:
 
