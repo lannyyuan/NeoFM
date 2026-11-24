@@ -9,11 +9,12 @@ pub enum Backend {Sixel,Ansi,None}
 fn choose(explicit:&str,term:&str,program:&str,mux:bool)->Backend{
  match explicit {
   "none"=>Backend::None,"ansi"=>Backend::Ansi,"sixel"=>if mux{Backend::Ansi}else{Backend::Sixel},
-  _=>if !mux&&(program=="iTerm.app"||term.contains("sixel")||term.starts_with("foot")||term.contains("mlterm")){Backend::Sixel}else{Backend::Ansi}
+  _=>if !mux&&((program=="iTerm.app"||program=="WindowsTerminal")||term.contains("sixel")||term.starts_with("foot")||term.contains("mlterm")){Backend::Sixel}else{Backend::Ansi}
  }
 }
 pub fn backend()->Backend{
- choose(&env::var("LFP_IMAGE_BACKEND").unwrap_or_default(),&env::var("TERM").unwrap_or_default(),&env::var("TERM_PROGRAM").unwrap_or_default(),env::var_os("TMUX").is_some()||env::var_os("STY").is_some())
+ let program=if cfg!(windows)&&env::var_os("WT_SESSION").is_some() {"WindowsTerminal".to_owned()}else{env::var("TERM_PROGRAM").unwrap_or_default()};
+ choose(&env::var("LFP_IMAGE_BACKEND").unwrap_or_default(),&env::var("TERM").unwrap_or_default(),&program,env::var_os("TMUX").is_some()||env::var_os("STY").is_some())
 }
 pub fn supported(path:&Path)->bool{
  path.extension().and_then(|x|x.to_str()).and_then(ImageFormat::from_extension).is_some_and(supported_format)
@@ -93,6 +94,7 @@ pub fn preview(p:&Path,w:usize,h:usize)->Result<String>{
 }
 #[test] fn routing(){
  assert_eq!(choose("","xterm-256color","iTerm.app",false),Backend::Sixel);
+ assert_eq!(choose("","xterm-256color","WindowsTerminal",false),Backend::Sixel);
  assert_eq!(choose("","xterm-256color","Apple_Terminal",false),Backend::Ansi);
  assert_eq!(choose("sixel","xterm","",true),Backend::Ansi);
  assert_eq!(choose("none","foot","",false),Backend::None);

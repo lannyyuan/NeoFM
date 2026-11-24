@@ -1,0 +1,21 @@
+set shell cmd
+set preview
+set hidden
+set nopreload
+set ratios 1:2:4
+set previewer lfpreview.exe
+nmap <space> &{{ "%LFP_QUICKLOOK_EXE%" %f% }}
+nmap <c-space> :toggle; down
+
+# NeoFM Keymap v1.0
+nmap y
+nmap d
+nmap yy copy
+nmap p paste
+nmap x cut
+nmap dd delete
+cmd open :toggle
+nmap <enter> open
+nmap o &{{ %OPENER% %f% }}
+nmap <c-space> toggle
+cmd delete ${{ "%SystemRoot%/System32/WindowsPowerShell/v1.0/powershell.exe" -NoProfile -File "%LFP_HOME%lf-trash.ps1" }}

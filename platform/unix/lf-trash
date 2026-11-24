@@ -1,0 +1,36 @@
+#!/bin/sh
+set -eu
+# lf exports current path as f, selected paths as newline-delimited fs.
+# Reject potentially ambiguous line breaks in batch mode; confirm exact paths before moving.
+if [ -n "${fs:-}" ]; then
+  oldifs=$IFS
+  IFS='
+'
+  set -f
+  set -- $fs
+  IFS=$oldifs
+  set +f
+else
+  [ -n "${f:-}" ] || { echo 'No file selected'; exit 1; }
+  set -- "$f"
+fi
+[ "$#" -gt 0 ] || exit 1
+for path do
+  case "$path" in /*) ;; *) echo 'Invalid or ambiguous selection'; exit 1;; esac
+  [ -e "$path" ] || [ -L "$path" ] || { printf 'Not found: %s\n' "$path"; exit 1; }
+  [ "$path" != / ] || exit 1
+  if printf "%s" "$path" | LC_ALL=C grep -q "[[:cntrl:]]"; then echo "Refusing a path with control characters"; exit 1; fi
+done
+printf 'Move %s item(s) to Trash (recoverable):\n' "$#"
+for path do printf '  %s\n' "$path"; done
+printf 'Confirm [y/N]: '
+IFS= read -r answer || exit 1
+[ "$answer" = y ] || [ "$answer" = Y ] || exit 0
+case "$(uname -s)" in
+ Darwin) exec /usr/bin/trash -s "$@";;
+ Linux)
+  if command -v gio >/dev/null 2>&1; then exec gio trash -- "$@"; fi
+  if command -v trash-put >/dev/null 2>&1; then exec trash-put -- "$@"; fi
+  echo 'No recoverable Trash backend. Nothing permanently deleted.'; exit 1;;
+ *) echo 'Unsupported Trash backend'; exit 1;;
+esac

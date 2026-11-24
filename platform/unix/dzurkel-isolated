@@ -1,0 +1,9 @@
+#!/bin/sh
+set -eu
+root="$(cd "$(dirname "$0")/.." && pwd -P)"
+r="$root/dzurkel-runtime"
+export LD_LIBRARY_PATH="$r/usr/lib/x86_64-linux-gnu"
+export QT_PLUGIN_PATH="$r/usr/lib/x86_64-linux-gnu/qt6/plugins"
+export QT_QPA_PLATFORM_PLUGIN_PATH="$QT_PLUGIN_PATH/platforms"
+if [ -n "${DISPLAY:-}" ] && [ -z "${WAYLAND_DISPLAY:-}" ]; then export QT_QPA_PLATFORM=xcb; fi
+exec "$r/usr/bin/dzurkel" "$@"

@@ -1,9 +1,9 @@
 use std::{env,fs,io::{self,IsTerminal,Write},path::Path,process::{Command,Stdio}};
 #[derive(Debug,PartialEq,Eq)]
-pub(crate) enum Backend { Mac, Linux, Terminal }
+pub(crate) enum Backend { Mac, Windows, Linux, Terminal }
 pub(crate) fn choose(os:&str,ssh:bool,gui:bool)->Backend {
  if ssh {return Backend::Terminal;}
- match os {"macos" => Backend::Mac,"linux" if gui => Backend::Linux,_=>Backend::Terminal}
+ match os {"macos" => Backend::Mac,"windows" => Backend::Windows,"linux" if gui => Backend::Linux,_=>Backend::Terminal}
 }
 pub(crate) fn backend()->Backend {
  choose(env::consts::OS,env::var_os("SSH_CONNECTION").is_some()||env::var_os("SSH_TTY").is_some()||env::var_os("SSH_CLIENT").is_some(),env::var_os("DISPLAY").is_some()||env::var_os("WAYLAND_DISPLAY").is_some())
@@ -27,6 +27,12 @@ pub(crate) fn open(path:&Path,dry:bool)->io::Result<()> {
    let st=Command::new("/usr/bin/qlmanage").arg("-p").arg(&p).status()?;
    if st.success(){return Ok(())} eprintln!("Quick Look exited: {st}");terminal(&p)
   },
+  Backend::Windows=>{
+   let exe=env::var_os("LFP_QUICKLOOK_EXE").map(std::path::PathBuf::from).or_else(||env::var_os("LOCALAPPDATA").map(|p|std::path::PathBuf::from(p).join("Programs").join("QuickLook").join("QuickLook.exe"))).filter(|p|p.is_file()).ok_or_else(||io::Error::new(io::ErrorKind::NotFound,"QuickLook.exe not found; set LFP_QUICKLOOK_EXE"))?;
+   let arg=p.to_str().and_then(|s|s.strip_prefix(r"\\?\UNC\").map(|s|format!(r"\\{s}")).or_else(||s.strip_prefix(r"\\?\").map(str::to_owned))).map(std::ffi::OsString::from).unwrap_or_else(||p.as_os_str().to_owned());
+   Command::new(exe).arg(arg).spawn()?;
+   Ok(())
+  },
   Backend::Linux=>{
    match Command::new("dzurkel").arg("--show").arg(&p).status(){
     Ok(s) if s.success()=>Ok(()),
@@ -49,6 +55,7 @@ fn terminal(p:&Path)->io::Result<()>{
 }
 #[test] fn routes(){
  assert_eq!(choose("macos",false,false),Backend::Mac);
+ assert_eq!(choose("windows",false,false),Backend::Windows);
  assert_eq!(choose("macos",true,true),Backend::Terminal);
  assert_eq!(choose("linux",false,true),Backend::Linux);
  assert_eq!(choose("linux",true,true),Backend::Terminal);

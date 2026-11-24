@@ -1,0 +1,36 @@
+#!/bin/sh
+set -eu
+self="$0"
+if [ -L "$self" ]; then
+ self="$(readlink "$self")"
+ case "$self" in /*) ;; *) self="$(dirname "$0")/$self";; esac
+fi
+root="$(cd "$(dirname "$self")/.." && pwd -P)"
+state="$HOME/.local/state/lfpreview-linux"
+umask 077
+mkdir -p "$state/config" "$state/cache" "$state/data" "$state/state" "$state/runtime"
+export LF_CONFIG_HOME="$state/config" LF_DATA_HOME="$state/data"
+export PATH="$root/bin:$PATH"
+unset LFP_QL_DRY_RUN LFP_QL_TRACE LFP_POC_TRACE
+cfg="$(mktemp "$state/config/lfrc.XXXXXX")"
+trap 'rm -f "$cfg"' EXIT HUP INT TERM
+printf 'set shell sh\nset preview\nset hidden\nset nopreload\nset ratios 1:2:4\nset previewer "%s/bin/lfpreview"\n' "$root" > "$cfg"
+cat >> "$cfg" <<'LFRCKEYS'
+nmap y
+nmap d
+nmap yy copy
+nmap p paste
+nmap x cut
+nmap dd delete
+cmd open :toggle
+nmap <enter> open
+nmap o &{{ xdg-open "$f" }}
+nmap <c-space> toggle
+LFRCKEYS
+printf 'cmd delete \044{{ "%s/bin/lf-trash" }}\n' "$root" >> "$cfg"
+if { [ -n "${DISPLAY:-}" ] || [ -n "${WAYLAND_DISPLAY:-}" ]; } && [ -z "${SSH_CONNECTION:-}${SSH_TTY:-}${SSH_CLIENT:-}" ] && command -v dzurkel >/dev/null 2>&1; then
+ printf 'nmap <space> &{{ dzurkel --show "$f" }}\n' >> "$cfg"
+else
+ printf 'nmap <space> \044{{ "%s/bin/lfpreview" quicklook "$f" }}\n' "$root" >> "$cfg"
+fi
+"$root/bin/lf" -single -config "$cfg" "$@"

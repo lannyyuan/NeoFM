@@ -51,6 +51,7 @@ fn preview(path:&Path,w:usize,h:usize)->io::Result<String>{
 fn main()->io::Result<()>{
  let a:Vec<_>=env::args_os().collect();
  if a.get(1).is_some_and(|x|x=="quicklook") {
+  if a.len()==3 && a[2]=="--selected" { let p=env::var_os("f").ok_or_else(||io::Error::new(io::ErrorKind::InvalidInput,"No selected file"))?; let q=p.to_string_lossy(); let q=if cfg!(windows) {q.strip_prefix('"').and_then(|s|s.strip_suffix('"')).unwrap_or(&q)}else{&q}; return quicklook::open(Path::new(q),false) }
   if a.len()==3 {return quicklook::open(Path::new(&a[2]),false)}
   if a.len()==4 && a[2]=="--dry-run" {return quicklook::open(Path::new(&a[3]),true)}
   eprintln!("Usage: lfpreview quicklook [--dry-run] PATH");std::process::exit(2)
