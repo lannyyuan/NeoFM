@@ -103,7 +103,7 @@ These are recommended combinations, not mandatory desktop environments. The core
 
 ## Build and run
 
-Use Go 1.26+ and Rust/Cargo 1.94+ on the target platform; Windows also requires MSVC build tools. The first build downloads locked dependencies. This is a private development repository, not a public package release; cloning requires authorized GitHub access.
+Use Go 1.26+ and Rust/Cargo 1.94+ on the target platform; Windows also requires MSVC build tools. The first build downloads locked dependencies. Prebuilt packages are available from [GitHub Releases](https://github.com/lannyyuan/NeoFM/releases/latest); the source repository is public.
 
 ### macOS / Linux
 

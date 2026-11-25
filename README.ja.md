@@ -103,7 +103,7 @@ LFP_IMAGE_BACKEND=ansi neofm
 
 ## ビルドと起動
 
-対象プラットフォームに Go 1.26+、Rust/Cargo 1.94+ が必要です。Windows には MSVC ビルドツールも必要です。初回ビルドは固定された依存関係をダウンロードします。プライベート開発リポジトリであり公開パッケージではないため、クローンには認証済み GitHub アクセスが必要です。
+対象プラットフォームに Go 1.26+、Rust/Cargo 1.94+ が必要です。Windows には MSVC ビルドツールも必要です。初回ビルドは固定された依存関係をダウンロードします。ビルド済みパッケージは [GitHub Releases](https://github.com/lannyyuan/NeoFM/releases/latest) から入手できます。ソースリポジトリは公開されています。
 
 ### macOS / Linux
 

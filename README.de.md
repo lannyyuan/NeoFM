@@ -103,7 +103,7 @@ Das sind Empfehlungen, keine vorgeschriebenen Desktopumgebungen. Der Kern benöt
 
 ## Bauen und starten
 
-Go 1.26+ und Rust/Cargo 1.94+ werden auf der Zielplattform benötigt; Windows zusätzlich MSVC-Build-Tools. Beim ersten Build werden die festgeschriebenen Abhängigkeiten geladen. Dies ist ein privates Entwicklungsrepository, kein öffentliches Paket; Klonen erfordert autorisierten GitHub-Zugriff.
+Go 1.26+ und Rust/Cargo 1.94+ werden auf der Zielplattform benötigt; Windows zusätzlich MSVC-Build-Tools. Beim ersten Build werden die festgeschriebenen Abhängigkeiten geladen. Vorgefertigte Pakete sind unter [GitHub Releases](https://github.com/lannyyuan/NeoFM/releases/latest) verfügbar; das Quellcode-Repository ist öffentlich.
 
 ### macOS / Linux
 

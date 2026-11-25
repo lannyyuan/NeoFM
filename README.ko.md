@@ -103,7 +103,7 @@ LFP_IMAGE_BACKEND=ansi neofm
 
 ## 빌드 및 실행
 
-대상 플랫폼에 Go 1.26+, Rust/Cargo 1.94+가 필요하며 Windows는 MSVC 빌드 도구도 필요합니다. 첫 빌드에서 잠긴 버전의 의존성을 다운로드합니다. 비공개 개발 저장소이며 공개 패키지가 아니므로 복제하려면 승인된 GitHub 접근 권한이 필요합니다.
+대상 플랫폼에 Go 1.26+, Rust/Cargo 1.94+가 필요하며 Windows는 MSVC 빌드 도구도 필요합니다. 첫 빌드에서 잠긴 버전의 의존성을 다운로드합니다. 빌드된 패키지는 [GitHub Releases](https://github.com/lannyyuan/NeoFM/releases/latest)에서 받을 수 있으며 소스 저장소는 공개되어 있습니다.
 
 ### macOS / Linux
 

@@ -103,7 +103,7 @@ LFP_IMAGE_BACKEND=ansi neofm
 
 ## 建置與執行
 
-目標平台需要 Go 1.26+、Rust/Cargo 1.94+；Windows 另需 MSVC 工具鏈。首次建置下載鎖定的相依套件。目前為私人開發儲存庫，尚無公開套件發行；複製需要授權的 GitHub 存取權限。
+目標平台需要 Go 1.26+、Rust/Cargo 1.94+；Windows 另需 MSVC 工具鏈。首次建置下載鎖定的相依套件。原始碼儲存庫已公開，可從 [GitHub Releases](https://github.com/lannyyuan/NeoFM/releases/latest) 下載預先建置的執行套件。
 
 ### macOS / Linux
 

@@ -103,7 +103,7 @@ São combinações recomendadas, não ambientes obrigatórios. O núcleo não de
 
 ## Compilação e execução
 
-Go 1.26+ e Rust/Cargo 1.94+ são necessários na plataforma de destino; Windows também requer as ferramentas MSVC. A primeira compilação baixa as dependências fixadas. Este é um repositório privado de desenvolvimento, não um pacote público; a clonagem exige acesso autorizado ao GitHub.
+Go 1.26+ e Rust/Cargo 1.94+ são necessários na plataforma de destino; Windows também requer as ferramentas MSVC. A primeira compilação baixa as dependências fixadas. Pacotes pré-compilados estão disponíveis em [GitHub Releases](https://github.com/lannyyuan/NeoFM/releases/latest); o repositório de código-fonte é público.
 
 ### macOS / Linux
 

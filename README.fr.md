@@ -103,7 +103,7 @@ Ces combinaisons sont recommandées, pas obligatoires. Le cœur ne dépend pas d
 
 ## Compilation et lancement
 
-Go 1.26+ et Rust/Cargo 1.94+ sont requis sur la plateforme cible, ainsi que MSVC sous Windows. La première compilation télécharge les dépendances verrouillées. Il s'agit d'un dépôt privé de développement, non d'un paquet public : le clonage nécessite un accès GitHub autorisé.
+Go 1.26+ et Rust/Cargo 1.94+ sont requis sur la plateforme cible, ainsi que MSVC sous Windows. La première compilation télécharge les dépendances verrouillées. Les paquets précompilés sont disponibles sur [GitHub Releases](https://github.com/lannyyuan/NeoFM/releases/latest) ; le dépôt source est public.
 
 ### macOS / Linux
 
