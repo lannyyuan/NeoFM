@@ -44,6 +44,28 @@ Le rapport par défaut est **1:2:4** : dossier parent à gauche, dossier courant
 | Texte / code | Rendu texte borné | Visionneuse native / lecteur terminal |
 | PDF, Office, médias | Métadonnées et indication d'aperçu | Selon les formats de l'application externe |
 
+## Aperçus riches via SSH — sans bureau graphique
+
+NeoFM est aussi un navigateur de documents à distance. Exécutez-le sur un serveur Linux via SSH ordinaire : navigation, opérations de fichiers et la plupart des aperçus quotidiens restent disponibles sans transfert X11, bureau distant ni téléchargement. Le moteur s'exécute à distance et le terminal affiche sa sortie.
+
+| Format | Aperçu en direct via SSH |
+| :-- | :-- |
+| Markdown : titres, listes, tableaux, CJK, blocs de code, formules, Mermaid | Rendu riche |
+| Texte UTF-8, sources, JSON, journaux, source HTML | Aperçu texte |
+| PNG, JPEG, première image GIF, WebP | Sixel ou blocs ANSI dans les limites du moteur |
+| PDF, Office, médias, archives | Type/taille ou métadonnées binaires, pas le rendu intégral |
+
+En SSH ou sans interface sous Linux, Space utilise le lecteur terminal (less -R -X si disponible) : Markdown rendu, texte borné ou métadonnées. Les images sont rendues dans la colonne latérale, pas agrandies dans le lecteur. PDF/Office complets, HTML rendu et Quick Look multimédia requièrent un visualiseur graphique local adapté. macOS et Windows conservent leurs raccourcis Space propres ; le lecteur SSH automatique décrit ici est celui de Linux. La détection d'images dépend du terminal et de l'environnement transmis ; tmux/screen utilisent ANSI. Ne forcez Sixel que sur un terminal compatible. La sortie est bornée et la qualité visuelle SSH haute résolution n'est pas entièrement validée.
+
+Vérifié sur une connexion SSH réelle vers Linux : Markdown, formules/Mermaid, génération de trames Sixel, images ANSI et routage vers le lecteur terminal (voir validation). [↗](docs/validation.md#ssh-preview-verification)
+
+~~~sh
+ssh user@linux-server
+neofm
+# Optional: reliable color-block preview in any compatible color terminal
+LFP_IMAGE_BACKEND=ansi neofm
+~~~
+
 ## NeoFM en action
 
 [![Aperçu Markdown — titres, listes et tableaux adaptatifs.](assets/screenshots-r3/showcase/01-markdown.png)](assets/screenshots-r3/raw/01-markdown.png)
@@ -161,17 +183,74 @@ dd utilise Windows PowerShell 5.1 et l'API Shell native ; testez avec un fichier
 
 ## Raccourcis
 
-| Touche | Action | Touche | Action |
-|:--|:--|:--|:--|
-| `h / j / k / l` | Naviguer | `Space` | Quick Look |
-| `Enter` | Marquer/démarquer un fichier ; entrer dans un dossier | `Ctrl+Space` | Basculer le marquage |
-| `yy` | Copier | `p` | Coller |
-| `x` | Couper | `dd` | Confirmer puis mettre à la corbeille |
-| `o` | Ouvrir à l'extérieur | `zh` | Afficher/masquer les éléments cachés |
-| `gg / G` | Premier / dernier | `/` | Rechercher |
-| `r` | Renommer | `q` | Quitter |
+### Navigation et aperçu
 
-Les fichiers marqués sont prioritaires ; sinon, l'action concerne le fichier courant. dd demande confirmation et ne bascule pas volontairement vers une suppression définitive si la corbeille est indisponible.
+| Touche | Action |
+| :-- | :-- |
+| `↑ / k · ↓ / j` | Monter/descendre |
+| `← / h` | Dossier parent |
+| `→ / l · Enter` | Entrer dans le dossier ; basculer le marquage d'un fichier |
+| `Home / gg · End / G` | Premier/dernier |
+| `Ctrl+U / Ctrl+D` | Demi-page haut/bas |
+| `PageUp / Ctrl+B · PageDown / Ctrl+F` | Page haut/bas |
+| `Ctrl+Y / Ctrl+E` | Défiler d'une ligne haut/bas |
+| `H / M / L` | Haut/milieu/bas de l'écran |
+| `gh` | Dossier personnel |
+| `[ / ]` | Dossier précédent/suivant dans l'historique |
+| `Space` | Grand aperçu / lecteur terminal |
+| `o` | Ouvrir dans une application externe |
+
+### Sélection et fichiers
+
+| Touche | Action |
+| :-- | :-- |
+| `Ctrl+Space` | Basculer le marquage courant |
+| `u` | Désélectionner tout, tous dossiers |
+| `v` | Inverser la sélection du dossier courant |
+| `V` | Démarrer une sélection de plage |
+| `yy` | Copier vers le tampon NeoFM |
+| `x` | Couper vers le tampon NeoFM |
+| `p` | Coller dans le dossier courant |
+| `c` | Vider le tampon de fichiers |
+| `dd` | Confirmer puis mettre à la corbeille |
+| `r` | Renommer |
+| `t` | Basculer l'étiquette du fichier |
+
+### Recherche et historique
+
+| Touche | Action |
+| :-- | :-- |
+| `/ / ?` | Recherche de nom avant/arrière |
+| `n / N` | Résultat suivant/précédent |
+| `f / F` | Recherche rapide de nom avant/arrière |
+| `; / ,` | Correspondance rapide suivante/précédente |
+| `m / ' / "` | Enregistrer/charger/supprimer un signet |
+
+### Tri et affichage
+
+| Touche | Action |
+| :-- | :-- |
+| `zh` | Afficher/masquer les éléments cachés |
+| `zr` | Inverser le tri |
+| `zn / zs / zt / za` | Masquer infos / taille / date / les deux |
+| `sn / ss / st` | Trier par nom / taille / modification |
+| `sa / sb / sc / se` | Trier par accès / création / changement d'état / extension |
+| `Ctrl+L / Ctrl+R` | Redessiner / recharger |
+
+### Commandes et modes
+
+| Touche | Action |
+| :-- | :-- |
+| `:` | Invite de commande |
+| `$ / % / ! / &` | Shell / pipe / attente / asynchrone |
+| `Ctrl+P / Ctrl+N` | Commande précédente/suivante |
+| `q` | Quitter |
+
+Raccourcis par défaut en mode normal, sensibles à la casse. Marquez plusieurs fichiers avec Enter ou Ctrl+Space, puis yy (copier) ou x (couper), allez à destination et appuyez sur p. Sans marquage, copier/couper utilise le fichier courant. Ces opérations effacent les marques mais conservent le tampon interne ; u retire les marques, c vide le tampon. yy et dd sont deux frappes successives. dd demande confirmation et utilise une suppression récupérable, sans bascule volontaire vers la suppression définitive. Space et o dépendent de la plateforme et de la session.
+
+Mode visuel : V démarre une plage, déplacez-vous pour l'étendre, V valide, Esc annule, o échange les extrémités. Les touches héritées y/d restent en mode visuel, contrairement à yy/x en mode normal. Validez avec V puis utilisez yy/x/dd en mode normal. Ligne de commande : Enter exécute, Esc annule, Tab complète, flèches haut/bas pour l'historique, gauche/droite et Home/End pour le curseur. Pour toutes les commandes et touches d'édition héritées, exécutez neofm -doc ou consultez [lf documentation](lf-upstream/doc.txt).
+
+Les raccourcis de molette sont hérités, mais la souris est désactivée par défaut.
 
 ## Architecture et validation
 

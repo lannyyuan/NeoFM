@@ -44,6 +44,28 @@ The default ratio is **1:2:4**: parent directory (left), current directory and s
 | Text / code | Bounded text rendering | Native viewer / terminal reader |
 | PDF, Office, media | Metadata and preview hint | Format support depends on external app |
 
+## Rich previews over SSH — no desktop required
+
+NeoFM is a remote document browser as well as a local file manager. Run it on a Linux server over ordinary SSH: navigation, file operations and most everyday sidebar preview workflows remain available without X11 forwarding, a remote desktop, or downloading files to your workstation. The renderer runs on the remote host; the terminal displays its output.
+
+| Format | Live sidebar over SSH |
+| :-- | :-- |
+| Markdown: headings, lists, tables, CJK, code blocks, math and Mermaid | Rich rendering |
+| UTF-8 text, source, JSON, logs, HTML source | Text preview |
+| PNG, JPEG, GIF first frame, WebP | Sixel or ANSI color blocks, within rendering limits |
+| PDF, Office, media and archives | Type/size or binary metadata; not full document/media rendering |
+
+On Linux SSH or headless sessions, Space opens the terminal reading fallback (less -R -X when available): rendered Markdown, bounded text or metadata. Images are rendered in the sidebar; the pager does not provide an enlarged graphical image. Full PDF/Office, rendered HTML and multimedia Quick Look require an appropriate local GUI viewer. macOS and Windows currently retain their platform-specific Space bindings; the automatic SSH reader described here is the Linux route. Image auto-detection depends on terminal capabilities and forwarded environment; tmux/screen use ANSI. Force Sixel only with a compatible terminal. The output is bounded; high-resolution SSH display fidelity has not been fully visually validated.
+
+Verified over an actual SSH connection to Linux: Markdown, math/Mermaid, Sixel frame generation, ANSI images and terminal-reader routing (see validation). [↗](docs/validation.md#ssh-preview-verification)
+
+~~~sh
+ssh user@linux-server
+neofm
+# Optional: reliable color-block preview in any compatible color terminal
+LFP_IMAGE_BACKEND=ansi neofm
+~~~
+
 ## See NeoFM in action
 
 [![Live Markdown — formatted headings, lists and adaptive tables.](assets/screenshots-r3/showcase/01-markdown.png)](assets/screenshots-r3/raw/01-markdown.png)
@@ -161,17 +183,74 @@ The dd adapter uses Windows PowerShell 5.1 and the native Shell API; confirm wit
 
 ## Keymap
 
-| Key | Action | Key | Action |
-|:--|:--|:--|:--|
-| `h / j / k / l` | Navigate | `Space` | Quick Look |
-| `Enter` | Mark/unmark file; enter folder | `Ctrl+Space` | Toggle mark |
-| `yy` | Copy | `p` | Paste |
-| `x` | Cut | `dd` | Confirm, then trash |
-| `o` | External open | `zh` | Toggle hidden entries |
-| `gg / G` | First / last | `/` | Search |
-| `r` | Rename | `q` | Quit |
+### Navigation & preview
 
-Marked files take precedence; otherwise operate on the current file. dd asks for confirmation and has no intentional permanent-delete fallback when native Trash is unavailable.
+| Key | Action |
+| :-- | :-- |
+| `↑ / k · ↓ / j` | Move up/down |
+| `← / h` | Parent directory |
+| `→ / l · Enter` | Enter directory; toggle file selection |
+| `Home / gg · End / G` | First/last entry |
+| `Ctrl+U / Ctrl+D` | Half page up/down |
+| `PageUp / Ctrl+B · PageDown / Ctrl+F` | Page up/down |
+| `Ctrl+Y / Ctrl+E` | Scroll one line up/down |
+| `H / M / L` | Top/middle/bottom of visible list |
+| `gh` | Home directory |
+| `[ / ]` | Previous/next directory in jump history |
+| `Space` | Large preview / terminal reader |
+| `o` | Open in external app |
+
+### Selection & file operations
+
+| Key | Action |
+| :-- | :-- |
+| `Ctrl+Space` | Toggle selection of current item |
+| `u` | Unselect all across directories |
+| `v` | Invert selection in current directory |
+| `V` | Start range selection |
+| `yy` | Copy files into NeoFM clipboard |
+| `x` | Cut files into NeoFM clipboard |
+| `p` | Paste into current directory |
+| `c` | Clear file clipboard |
+| `dd` | Confirm and move to Trash |
+| `r` | Rename |
+| `t` | Toggle file tag |
+
+### Search & history
+
+| Key | Action |
+| :-- | :-- |
+| `/ / ?` | Forward/backward filename search |
+| `n / N` | Next/previous search match |
+| `f / F` | Quick filename find forward/backward |
+| `; / ,` | Next/previous find match |
+| `m / ' / "` | Save/load/remove directory bookmark |
+
+### Sort & display
+
+| Key | Action |
+| :-- | :-- |
+| `zh` | Toggle hidden entries |
+| `zr` | Reverse sort order |
+| `zn / zs / zt / za` | Hide info / size / time / both |
+| `sn / ss / st` | Sort by name / size / modification time |
+| `sa / sb / sc / se` | Sort by access / birth / change time / extension |
+| `Ctrl+L / Ctrl+R` | Redraw / reload |
+
+### Commands & modes
+
+| Key | Action |
+| :-- | :-- |
+| `:` | Command prompt |
+| `$ / % / ! / &` | Shell / piped / wait / async shell |
+| `Ctrl+P / Ctrl+N` | Command history previous/next |
+| `q` | Quit |
+
+Normal-mode defaults; keys are case-sensitive. Select multiple items with Enter or Ctrl+Space, press yy (copy) or x (cut), navigate to the destination, then press p. With no marked items, copy/cut use the current file. Copy/cut clear marks but retain the internal file clipboard; u clears marks, c clears that clipboard. yy and dd are two consecutive keystrokes, not chords. dd uses a recoverable-delete helper with confirmation; no deliberate permanent-delete fallback. Space and o have platform/session-dependent viewers.
+
+Visual mode: V starts a range; navigate to extend it, V accepts, Esc discards, o swaps range endpoints. In Visual mode inherited y/d copy/cut bindings remain distinct from Normal-mode yy/x. Use V to accept, then use yy/x/dd in Normal mode for consistent NeoFM behavior. Command-line mode: Enter executes, Esc cancels, Tab completes, Up/Down recall history, arrows/Home/End move the cursor. For the complete inherited command-line editing bindings and commands, run neofm -doc or consult [lf documentation](lf-upstream/doc.txt).
+
+Mouse-wheel bindings are inherited but mouse support is off by default.
 
 ## Architecture and validation
 

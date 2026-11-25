@@ -44,6 +44,28 @@ A proporção padrão é **1:2:4**: diretório pai à esquerda, diretório atual
 | Texto / código | Renderização de texto limitada | Visualizador nativo / leitor de terminal |
 | PDF, Office, mídia | Metadados e indicação de prévia | Depende dos formatos do aplicativo externo |
 
+## Prévias ricas via SSH — sem desktop
+
+NeoFM também é um navegador remoto de documentos. Execute-o em um servidor Linux via SSH comum: navegação, operações de arquivos e a maioria das prévias laterais cotidianas continuam disponíveis sem encaminhamento X11, desktop remoto ou download de arquivos. O renderizador roda no host remoto e o terminal exibe a saída.
+
+| Formato | Prévia lateral via SSH |
+| :-- | :-- |
+| Markdown: títulos, listas, tabelas, CJK, blocos de código, fórmulas, Mermaid | Renderização rica |
+| Texto UTF-8, código-fonte, JSON, logs, fonte HTML | Prévia de texto |
+| PNG, JPEG, primeiro quadro GIF, WebP | Sixel ou blocos ANSI dentro dos limites |
+| PDF, Office, mídia e compactados | Tipo/tamanho ou metadados binários, não conteúdo completo |
+
+Em Linux por SSH ou headless, Space abre o leitor de terminal (less -R -X quando disponível): Markdown renderizado, texto limitado ou metadados. Imagens são renderizadas na lateral, não ampliadas no leitor. PDF/Office completos, HTML renderizado e Quick Look multimídia exigem um visualizador gráfico local adequado. macOS e Windows mantêm as próprias teclas Space; o leitor SSH automático descrito aqui é o de Linux. A detecção depende do terminal e do ambiente encaminhado; tmux/screen usam ANSI. Force Sixel apenas em terminal compatível. A saída é limitada; a fidelidade visual SSH em alta resolução ainda não foi completamente validada.
+
+Verificado em conexão SSH real com Linux: Markdown, fórmulas/Mermaid, geração de quadros Sixel, imagens ANSI e caminho do leitor de terminal (veja validação). [↗](docs/validation.md#ssh-preview-verification)
+
+~~~sh
+ssh user@linux-server
+neofm
+# Optional: reliable color-block preview in any compatible color terminal
+LFP_IMAGE_BACKEND=ansi neofm
+~~~
+
 ## NeoFM em ação
 
 [![Prévia Markdown — títulos, listas e tabelas adaptativas.](assets/screenshots-r3/showcase/01-markdown.png)](assets/screenshots-r3/raw/01-markdown.png)
@@ -161,17 +183,74 @@ dd utiliza Windows PowerShell 5.1 e a API nativa do Shell; teste com um arquivo 
 
 ## Teclas
 
-| Tecla | Ação | Tecla | Ação |
-|:--|:--|:--|:--|
-| `h / j / k / l` | Navegar | `Space` | Quick Look |
-| `Enter` | Marcar/desmarcar arquivo; entrar na pasta | `Ctrl+Space` | Alternar marca |
-| `yy` | Copiar | `p` | Colar |
-| `x` | Recortar | `dd` | Confirmar e enviar à lixeira |
-| `o` | Abrir externamente | `zh` | Alternar itens ocultos |
-| `gg / G` | Primeiro / último | `/` | Pesquisar |
-| `r` | Renomear | `q` | Sair |
+### Navegação e prévia
 
-Arquivos marcados têm prioridade; caso contrário, a operação usa o arquivo atual. dd solicita confirmação e não muda intencionalmente para exclusão permanente quando a lixeira nativa está indisponível.
+| Tecla | Ação |
+| :-- | :-- |
+| `↑ / k · ↓ / j` | Subir/descer |
+| `← / h` | Diretório pai |
+| `→ / l · Enter` | Entrar na pasta; alternar marca do arquivo |
+| `Home / gg · End / G` | Primeiro/último |
+| `Ctrl+U / Ctrl+D` | Meia página acima/abaixo |
+| `PageUp / Ctrl+B · PageDown / Ctrl+F` | Página acima/abaixo |
+| `Ctrl+Y / Ctrl+E` | Rolar uma linha acima/abaixo |
+| `H / M / L` | Topo/meio/base da tela |
+| `gh` | Diretório pessoal |
+| `[ / ]` | Diretório anterior/próximo no histórico |
+| `Space` | Prévia ampliada / leitor de terminal |
+| `o` | Abrir externamente |
+
+### Seleção e arquivos
+
+| Tecla | Ação |
+| :-- | :-- |
+| `Ctrl+Space` | Alternar marca atual |
+| `u` | Desmarcar tudo em todos os diretórios |
+| `v` | Inverter seleção no diretório atual |
+| `V` | Iniciar seleção de intervalo |
+| `yy` | Copiar para o buffer NeoFM |
+| `x` | Recortar para o buffer NeoFM |
+| `p` | Colar no diretório atual |
+| `c` | Limpar buffer de arquivos |
+| `dd` | Confirmar e enviar à lixeira |
+| `r` | Renomear |
+| `t` | Alternar etiqueta |
+
+### Pesquisa e histórico
+
+| Tecla | Ação |
+| :-- | :-- |
+| `/ / ?` | Pesquisar nome para frente/trás |
+| `n / N` | Próximo/anterior resultado |
+| `f / F` | Busca rápida para frente/trás |
+| `; / ,` | Próxima/anterior correspondência |
+| `m / ' / "` | Salvar/carregar/remover marcador de diretório |
+
+### Ordenação e exibição
+
+| Tecla | Ação |
+| :-- | :-- |
+| `zh` | Alternar ocultos |
+| `zr` | Inverter ordenação |
+| `zn / zs / zt / za` | Ocultar info / tamanho / data / ambos |
+| `sn / ss / st` | Ordenar por nome / tamanho / modificação |
+| `sa / sb / sc / se` | Ordenar por acesso / criação / alteração de estado / extensão |
+| `Ctrl+L / Ctrl+R` | Redesenhar / recarregar |
+
+### Comandos e modos
+
+| Tecla | Ação |
+| :-- | :-- |
+| `:` | Entrada de comandos |
+| `$ / % / ! / &` | Shell / pipe / espera / assíncrono |
+| `Ctrl+P / Ctrl+N` | Comando anterior/próximo |
+| `q` | Sair |
+
+Teclas padrão no modo normal distinguem maiúsculas. Marque vários arquivos com Enter ou Ctrl+Space, pressione yy (copiar) ou x (recortar), vá ao destino e pressione p. Sem marcação, usa-se o arquivo atual. Copiar/recortar limpa marcas, mas mantém o buffer interno; u limpa marcas, c limpa o buffer. yy e dd são duas teclas consecutivas. dd pede confirmação e usa exclusão recuperável, sem recorrer intencionalmente à exclusão permanente. Space e o dependem da plataforma e sessão.
+
+Modo visual: V inicia intervalo, mova para ampliar, V aceita, Esc descarta, o troca as extremidades. y/d herdados permanecem no modo visual, diferentes de yy/x no modo normal. Aceite com V e use yy/x/dd no modo normal. Linha de comando: Enter executa, Esc cancela, Tab completa, setas cima/baixo para histórico, esquerda/direita e Home/End para cursor. Para todas as teclas de edição herdadas e comandos, execute neofm -doc ou consulte [lf documentation](lf-upstream/doc.txt).
+
+Atalhos de roda do mouse são herdados, mas o mouse fica desativado por padrão.
 
 ## Arquitetura e validação
 

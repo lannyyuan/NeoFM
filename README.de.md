@@ -44,6 +44,28 @@ Das Standardverhältnis ist **1:2:4**: links das übergeordnete Verzeichnis, in 
 | Text / Code | Begrenzte Textdarstellung | Nativer Betrachter / Terminal-Reader |
 | PDF, Office, Medien | Metadaten und Vorschauhinweis | Abhängig von externen Formatunterstützungen |
 
+## Vielseitige Vorschauen über SSH — kein Desktop nötig
+
+NeoFM ist zugleich ein lokaler Dateimanager und ein entfernter Dokumentbetrachter. Auf einem Linux-Server über normales SSH bleiben Navigation, Dateioperationen und die meisten alltäglichen Seitenvorschauen ohne X11-Weiterleitung, Remote-Desktop oder Dateidownload verfügbar. Der Renderer läuft auf dem entfernten Rechner; das Terminal zeigt seine Ausgabe.
+
+| Format | Live-Vorschau über SSH |
+| :-- | :-- |
+| Markdown: Überschriften, Listen, Tabellen, CJK, Codeblöcke, Formeln, Mermaid | Formatierte Darstellung |
+| UTF-8-Text, Quellcode, JSON, Logs, HTML-Quelltext | Textvorschau |
+| PNG, JPEG, erstes GIF-Bild, WebP | Sixel oder ANSI-Farbblöcke innerhalb der Rendergrenzen |
+| PDF, Office, Medien und Archive | Typ/Größe oder binäre Metadaten, keine vollständige Darstellung |
+
+Unter Linux-SSH oder ohne grafische Oberfläche öffnet Space den Terminal-Reader (less -R -X, falls verfügbar): formatiertes Markdown, begrenzten Text oder Metadaten. Bilder werden in der Seitenleiste gerendert, nicht vergrößert im Reader. Vollständiges PDF/Office, gerendertes HTML und Multimedia-Quick-Look benötigen geeignete lokale GUI-Programme. macOS und Windows behalten derzeit ihre eigenen Space-Belegungen; der automatische SSH-Reader ist hier der Linux-Pfad. Bilderkennung hängt von Terminal und weitergegebener Umgebung ab; tmux/screen nutzen ANSI. Sixel nur bei Kompatibilität erzwingen. Ausgabe ist begrenzt; hochauflösende SSH-Bildqualität ist noch nicht vollständig visuell geprüft.
+
+Über eine echte Linux-SSH-Verbindung geprüft: Markdown, Formeln/Mermaid, Sixel-Frame-Erzeugung, ANSI-Bilder und Terminal-Reader-Routing (siehe Validierung). [↗](docs/validation.md#ssh-preview-verification)
+
+~~~sh
+ssh user@linux-server
+neofm
+# Optional: reliable color-block preview in any compatible color terminal
+LFP_IMAGE_BACKEND=ansi neofm
+~~~
+
 ## NeoFM in Aktion
 
 [![Markdown-Live-Vorschau — Überschriften, Listen und adaptive Tabellen.](assets/screenshots-r3/showcase/01-markdown.png)](assets/screenshots-r3/raw/01-markdown.png)
@@ -161,17 +183,74 @@ dd verwendet Windows PowerShell 5.1 und die native Shell-API; mit einer entbehrl
 
 ## Tastenbelegung
 
-| Taste | Aktion | Taste | Aktion |
-|:--|:--|:--|:--|
-| `h / j / k / l` | Navigieren | `Space` | Quick Look |
-| `Enter` | Datei markieren/entmarkieren; Ordner betreten | `Ctrl+Space` | Markierung umschalten |
-| `yy` | Kopieren | `p` | Einfügen |
-| `x` | Ausschneiden | `dd` | Bestätigen, dann Papierkorb |
-| `o` | Extern öffnen | `zh` | Versteckte Einträge umschalten |
-| `gg / G` | Erster / letzter Eintrag | `/` | Suchen |
-| `r` | Umbenennen | `q` | Beenden |
+### Navigation und Vorschau
 
-Markierte Dateien haben Vorrang, sonst gilt die aktuelle Datei. dd verlangt Bestätigung und wechselt bei nicht verfügbarem Papierkorb nicht absichtlich zur endgültigen Löschung.
+| Taste | Aktion |
+| :-- | :-- |
+| `↑ / k · ↓ / j` | Nach oben/unten |
+| `← / h` | Übergeordnetes Verzeichnis |
+| `→ / l · Enter` | Ordner betreten; Dateimarkierung umschalten |
+| `Home / gg · End / G` | Erster/letzter Eintrag |
+| `Ctrl+U / Ctrl+D` | Halbe Seite hoch/runter |
+| `PageUp / Ctrl+B · PageDown / Ctrl+F` | Seite hoch/runter |
+| `Ctrl+Y / Ctrl+E` | Eine Zeile hoch/runter scrollen |
+| `H / M / L` | Oberer/mittlerer/unterer Bildschirmbereich |
+| `gh` | Home-Verzeichnis |
+| `[ / ]` | Vorheriger/nächster Verzeichnisverlauf |
+| `Space` | Große Vorschau / Terminal-Reader |
+| `o` | Extern öffnen |
+
+### Auswahl und Dateioperationen
+
+| Taste | Aktion |
+| :-- | :-- |
+| `Ctrl+Space` | Aktuelle Markierung umschalten |
+| `u` | Alle Markierungen in allen Ordnern aufheben |
+| `v` | Auswahl im aktuellen Ordner umkehren |
+| `V` | Bereichsauswahl starten |
+| `yy` | In NeoFM-Puffer kopieren |
+| `x` | In NeoFM-Puffer ausschneiden |
+| `p` | Im aktuellen Ordner einfügen |
+| `c` | Dateipuffer leeren |
+| `dd` | Bestätigen und in den Papierkorb |
+| `r` | Umbenennen |
+| `t` | Dateitag umschalten |
+
+### Suche und Verlauf
+
+| Taste | Aktion |
+| :-- | :-- |
+| `/ / ?` | Dateinamen vorwärts/rückwärts suchen |
+| `n / N` | Nächster/vorheriger Suchtreffer |
+| `f / F` | Schnellsuche vorwärts/rückwärts |
+| `; / ,` | Nächster/vorheriger Schnellsuchtreffer |
+| `m / ' / "` | Ordnerlesezeichen speichern/laden/löschen |
+
+### Sortierung und Anzeige
+
+| Taste | Aktion |
+| :-- | :-- |
+| `zh` | Versteckte Einträge umschalten |
+| `zr` | Sortierung umkehren |
+| `zn / zs / zt / za` | Info aus / Größe / Zeit / beides |
+| `sn / ss / st` | Nach Name / Größe / Änderungszeit sortieren |
+| `sa / sb / sc / se` | Nach Zugriff / Erzeugung / Statusänderung / Endung sortieren |
+| `Ctrl+L / Ctrl+R` | Neu zeichnen / neu laden |
+
+### Befehle und Modi
+
+| Taste | Aktion |
+| :-- | :-- |
+| `:` | Befehlseingabe |
+| `$ / % / ! / &` | Shell / Pipe / Warten / asynchron |
+| `Ctrl+P / Ctrl+N` | Vorheriger/nächster Befehlsverlauf |
+| `q` | Beenden |
+
+Standardtasten im Normalmodus, Groß-/Kleinschreibung beachten. Mehrere Einträge mit Enter oder Ctrl+Space markieren, yy (Kopieren) oder x (Ausschneiden), zum Ziel navigieren und p drücken. Ohne Markierung wird die aktuelle Datei genutzt. Kopieren/Ausschneiden hebt Markierungen auf, behält aber den internen Dateipuffer. u hebt Markierungen auf, c leert den Puffer. yy und dd sind aufeinanderfolgende Tasten. dd verlangt Bestätigung und nutzt wiederherstellbares Löschen ohne beabsichtigten Wechsel zur endgültigen Löschung. Space und o hängen von Plattform und Sitzung ab.
+
+Visual Mode: V startet einen Bereich, Bewegung erweitert ihn, V übernimmt, Esc verwirft, o tauscht die Endpunkte. Die geerbten y/d-Tasten bleiben im Visual Mode erhalten, anders als yy/x im Normalmodus. Erst mit V übernehmen, dann yy/x/dd normal verwenden. Befehlszeile: Enter ausführen, Esc abbrechen, Tab vervollständigen, Pfeile hoch/runter für Verlauf, links/rechts und Home/End für Cursor. Vollständige geerbte Bearbeitungstasten und Befehle: neofm -doc oder [lf documentation](lf-upstream/doc.txt).
+
+Mausradbelegungen sind geerbt, Mausunterstützung ist standardmäßig aus.
 
 ## Architektur und Validierung
 

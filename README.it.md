@@ -44,6 +44,28 @@ Il rapporto predefinito è **1:2:4**: cartella superiore a sinistra, cartella co
 | Testo / codice | Rendering di testo limitato | Visualizzatore nativo / lettore terminale |
 | PDF, Office, media | Metadati e indicazione di anteprima | Dipende dai formati supportati dall'app esterna |
 
+## Anteprime ricche via SSH — senza desktop
+
+NeoFM è anche un browser remoto di documenti. Eseguilo su un server Linux tramite SSH normale: navigazione, operazioni sui file e gran parte delle anteprime laterali quotidiane restano disponibili senza inoltro X11, desktop remoto o download. Il renderer gira sull'host remoto e il terminale ne mostra l'output.
+
+| Formato | Anteprima laterale via SSH |
+| :-- | :-- |
+| Markdown: titoli, elenchi, tabelle, CJK, blocchi di codice, formule, Mermaid | Rendering ricco |
+| Testo UTF-8, sorgenti, JSON, log, sorgente HTML | Anteprima testuale |
+| PNG, JPEG, primo fotogramma GIF, WebP | Sixel o blocchi ANSI entro i limiti |
+| PDF, Office, media e archivi | Tipo/dimensione o metadati binari, non rendering completo |
+
+Su Linux via SSH o headless, Space apre il lettore terminale (less -R -X se disponibile): Markdown renderizzato, testo limitato o metadati. Le immagini sono renderizzate nella colonna laterale, non ingrandite nel lettore. PDF/Office completi, HTML renderizzato e Quick Look multimediale richiedono un visualizzatore grafico locale adatto. macOS e Windows conservano le proprie assegnazioni Space; il lettore SSH automatico qui descritto è quello Linux. Il rilevamento dipende dal terminale e dall'ambiente inoltrato; tmux/screen usano ANSI. Forza Sixel solo su terminali compatibili. L'output è limitato; la fedeltà visiva SSH ad alta risoluzione non è completamente verificata.
+
+Verificato tramite una vera connessione SSH a Linux: Markdown, formule/Mermaid, generazione frame Sixel, immagini ANSI e percorso lettore terminale (vedi validazione). [↗](docs/validation.md#ssh-preview-verification)
+
+~~~sh
+ssh user@linux-server
+neofm
+# Optional: reliable color-block preview in any compatible color terminal
+LFP_IMAGE_BACKEND=ansi neofm
+~~~
+
 ## NeoFM in azione
 
 [![Anteprima Markdown — titoli, elenchi e tabelle adattive.](assets/screenshots-r3/showcase/01-markdown.png)](assets/screenshots-r3/raw/01-markdown.png)
@@ -161,17 +183,74 @@ dd usa Windows PowerShell 5.1 e l'API Shell nativa; provalo con un file sacrific
 
 ## Tasti
 
-| Tasto | Azione | Tasto | Azione |
-|:--|:--|:--|:--|
-| `h / j / k / l` | Naviga | `Space` | Quick Look |
-| `Enter` | Marca/smarca file; entra nella cartella | `Ctrl+Space` | Alterna marcatura |
-| `yy` | Copia | `p` | Incolla |
-| `x` | Taglia | `dd` | Conferma e sposta nel cestino |
-| `o` | Apri esternamente | `zh` | Alterna elementi nascosti |
-| `gg / G` | Primo / ultimo | `/` | Cerca |
-| `r` | Rinomina | `q` | Esci |
+### Navigazione e anteprima
 
-I file marcati hanno precedenza; altrimenti l'operazione riguarda il file corrente. dd chiede conferma e non passa deliberatamente alla cancellazione definitiva se il cestino nativo non è disponibile.
+| Tasto | Azione |
+| :-- | :-- |
+| `↑ / k · ↓ / j` | Su/giù |
+| `← / h` | Cartella superiore |
+| `→ / l · Enter` | Entra nella cartella; alterna marca file |
+| `Home / gg · End / G` | Primo/ultimo |
+| `Ctrl+U / Ctrl+D` | Mezza pagina su/giù |
+| `PageUp / Ctrl+B · PageDown / Ctrl+F` | Pagina su/giù |
+| `Ctrl+Y / Ctrl+E` | Scorri una riga su/giù |
+| `H / M / L` | Parte alta/centrale/bassa dello schermo |
+| `gh` | Cartella home |
+| `[ / ]` | Cartella precedente/successiva nella cronologia |
+| `Space` | Anteprima grande / lettore terminale |
+| `o` | Apri esternamente |
+
+### Selezione e file
+
+| Tasto | Azione |
+| :-- | :-- |
+| `Ctrl+Space` | Alterna marcatura corrente |
+| `u` | Deseleziona tutto in tutte le cartelle |
+| `v` | Inverti selezione della cartella corrente |
+| `V` | Inizia selezione intervallo |
+| `yy` | Copia nel buffer NeoFM |
+| `x` | Taglia nel buffer NeoFM |
+| `p` | Incolla nella cartella corrente |
+| `c` | Svuota buffer file |
+| `dd` | Conferma e sposta nel cestino |
+| `r` | Rinomina |
+| `t` | Alterna tag file |
+
+### Ricerca e cronologia
+
+| Tasto | Azione |
+| :-- | :-- |
+| `/ / ?` | Cerca nome avanti/indietro |
+| `n / N` | Risultato successivo/precedente |
+| `f / F` | Ricerca rapida avanti/indietro |
+| `; / ,` | Corrispondenza rapida successiva/precedente |
+| `m / ' / "` | Salva/carica/rimuovi segnalibro cartella |
+
+### Ordinamento e visualizzazione
+
+| Tasto | Azione |
+| :-- | :-- |
+| `zh` | Alterna elementi nascosti |
+| `zr` | Inverti ordinamento |
+| `zn / zs / zt / za` | Nascondi info / dimensione / data / entrambe |
+| `sn / ss / st` | Ordina per nome / dimensione / modifica |
+| `sa / sb / sc / se` | Ordina per accesso / creazione / cambio stato / estensione |
+| `Ctrl+L / Ctrl+R` | Ridisegna / ricarica |
+
+### Comandi e modalità
+
+| Tasto | Azione |
+| :-- | :-- |
+| `:` | Inserimento comandi |
+| `$ / % / ! / &` | Shell / pipe / attesa / asincrona |
+| `Ctrl+P / Ctrl+N` | Comando precedente/successivo |
+| `q` | Esci |
+
+Tasti predefiniti in modalità normale, con distinzione maiuscole/minuscole. Marca più file con Enter o Ctrl+Space, premi yy (copia) o x (taglia), vai alla destinazione e premi p. Senza marcature viene usato il file corrente. Copia/taglia cancella le marche ma conserva il buffer interno; u toglie marche, c svuota il buffer. yy e dd sono due pressioni consecutive. dd chiede conferma e usa eliminazione recuperabile, senza passare deliberatamente a cancellazione definitiva. Space e o dipendono dalla piattaforma e sessione.
+
+Modalità visuale: V inizia un intervallo, spostati per estenderlo, V accetta, Esc scarta, o scambia gli estremi. y/d ereditati restano in modalità visuale, distinti da yy/x in normale. Accetta con V poi usa yy/x/dd in normale. Riga di comando: Enter esegue, Esc annulla, Tab completa, frecce su/giù per cronologia, sinistra/destra e Home/End per cursore. Per tutti i tasti di editing ereditati e comandi, esegui neofm -doc o consulta [lf documentation](lf-upstream/doc.txt).
+
+Le associazioni della rotella sono ereditate, ma il mouse è disattivato per impostazione predefinita.
 
 ## Architettura e validazione
 

@@ -44,6 +44,28 @@ La proporción predeterminada es **1:2:4**: directorio superior a la izquierda, 
 | Texto / código | Renderizado de texto limitado | Visor nativo / lector de terminal |
 | PDF, Office, multimedia | Metadatos e indicación de vista previa | Depende de los formatos de la aplicación externa |
 
+## Vistas enriquecidas por SSH — sin escritorio
+
+NeoFM también es un navegador remoto de documentos. Ejecútalo en un servidor Linux mediante SSH normal: la navegación, las operaciones de archivos y la mayoría de las vistas laterales cotidianas siguen disponibles sin reenvío X11, escritorio remoto ni descargar archivos. El renderizador se ejecuta en el servidor y el terminal muestra su salida.
+
+| Formato | Vista lateral por SSH |
+| :-- | :-- |
+| Markdown: encabezados, listas, tablas, CJK, bloques de código, fórmulas, Mermaid | Renderizado enriquecido |
+| Texto UTF-8, código fuente, JSON, registros, fuente HTML | Vista de texto |
+| PNG, JPEG, primer fotograma GIF, WebP | Sixel o bloques ANSI dentro de los límites |
+| PDF, Office, multimedia y archivos comprimidos | Tipo/tamaño o metadatos binarios, no renderizado completo |
+
+En Linux por SSH o sin escritorio, Space abre el lector de terminal (less -R -X si está disponible): Markdown renderizado, texto limitado o metadatos. Las imágenes se muestran en la columna lateral, no ampliadas en el lector. PDF/Office completos, HTML renderizado y Quick Look multimedia requieren un visor gráfico local adecuado. macOS y Windows conservan sus propias teclas Space; el lector SSH automático descrito aquí es de Linux. La detección depende del terminal y el entorno transmitido; tmux/screen usan ANSI. Fuerza Sixel solo en un terminal compatible. La salida es limitada; la fidelidad gráfica SSH de alta resolución aún no se ha validado visualmente por completo.
+
+Verificado mediante una conexión SSH real a Linux: Markdown, fórmulas/Mermaid, generación de tramas Sixel, imágenes ANSI y ruta del lector de terminal (ver validación). [↗](docs/validation.md#ssh-preview-verification)
+
+~~~sh
+ssh user@linux-server
+neofm
+# Optional: reliable color-block preview in any compatible color terminal
+LFP_IMAGE_BACKEND=ansi neofm
+~~~
+
 ## NeoFM en acción
 
 [![Vista previa Markdown — encabezados, listas y tablas adaptables.](assets/screenshots-r3/showcase/01-markdown.png)](assets/screenshots-r3/raw/01-markdown.png)
@@ -161,17 +183,74 @@ dd utiliza Windows PowerShell 5.1 y la API nativa del Shell; pruébalo con un ar
 
 ## Teclas
 
-| Tecla | Acción | Tecla | Acción |
-|:--|:--|:--|:--|
-| `h / j / k / l` | Navegar | `Space` | Quick Look |
-| `Enter` | Marcar/desmarcar archivo; entrar en carpeta | `Ctrl+Space` | Alternar marca |
-| `yy` | Copiar | `p` | Pegar |
-| `x` | Cortar | `dd` | Confirmar y enviar a la papelera |
-| `o` | Abrir externamente | `zh` | Alternar elementos ocultos |
-| `gg / G` | Primero / último | `/` | Buscar |
-| `r` | Renombrar | `q` | Salir |
+### Navegación y vista previa
 
-Los archivos marcados tienen prioridad; de lo contrario, se actúa sobre el archivo actual. dd solicita confirmación y no cambia deliberadamente a eliminación permanente si la papelera nativa no está disponible.
+| Tecla | Acción |
+| :-- | :-- |
+| `↑ / k · ↓ / j` | Subir/bajar |
+| `← / h` | Directorio superior |
+| `→ / l · Enter` | Entrar en carpeta; alternar marca de archivo |
+| `Home / gg · End / G` | Primero/último |
+| `Ctrl+U / Ctrl+D` | Media página arriba/abajo |
+| `PageUp / Ctrl+B · PageDown / Ctrl+F` | Página arriba/abajo |
+| `Ctrl+Y / Ctrl+E` | Desplazar una línea arriba/abajo |
+| `H / M / L` | Parte superior/central/inferior de pantalla |
+| `gh` | Directorio personal |
+| `[ / ]` | Directorio anterior/siguiente del historial |
+| `Space` | Vista grande / lector de terminal |
+| `o` | Abrir externamente |
+
+### Selección y archivos
+
+| Tecla | Acción |
+| :-- | :-- |
+| `Ctrl+Space` | Alternar marca actual |
+| `u` | Desmarcar todo en todos los directorios |
+| `v` | Invertir selección del directorio actual |
+| `V` | Iniciar selección de rango |
+| `yy` | Copiar al búfer de NeoFM |
+| `x` | Cortar al búfer de NeoFM |
+| `p` | Pegar en el directorio actual |
+| `c` | Vaciar búfer de archivos |
+| `dd` | Confirmar y enviar a papelera |
+| `r` | Renombrar |
+| `t` | Alternar etiqueta |
+
+### Búsqueda e historial
+
+| Tecla | Acción |
+| :-- | :-- |
+| `/ / ?` | Buscar nombre adelante/atrás |
+| `n / N` | Resultado siguiente/anterior |
+| `f / F` | Búsqueda rápida adelante/atrás |
+| `; / ,` | Coincidencia rápida siguiente/anterior |
+| `m / ' / "` | Guardar/cargar/borrar marcador de directorio |
+
+### Orden y visualización
+
+| Tecla | Acción |
+| :-- | :-- |
+| `zh` | Alternar ocultos |
+| `zr` | Invertir orden |
+| `zn / zs / zt / za` | Ocultar info / tamaño / fecha / ambos |
+| `sn / ss / st` | Ordenar por nombre / tamaño / modificación |
+| `sa / sb / sc / se` | Ordenar por acceso / creación / cambio de estado / extensión |
+| `Ctrl+L / Ctrl+R` | Redibujar / recargar |
+
+### Comandos y modos
+
+| Tecla | Acción |
+| :-- | :-- |
+| `:` | Entrada de comandos |
+| `$ / % / ! / &` | Shell / tubería / espera / asíncrono |
+| `Ctrl+P / Ctrl+N` | Comando anterior/siguiente |
+| `q` | Salir |
+
+Teclas predeterminadas en modo normal, distinguen mayúsculas. Marca varios archivos con Enter o Ctrl+Space, pulsa yy (copiar) o x (cortar), navega al destino y pulsa p. Sin marcas se usa el archivo actual. Copiar/cortar borra las marcas pero conserva el búfer interno; u quita marcas, c vacía el búfer. yy y dd son dos pulsaciones consecutivas. dd pide confirmación y usa eliminación recuperable, sin pasar deliberadamente a eliminación permanente. Space y o dependen de plataforma y sesión.
+
+Modo visual: V inicia un rango, desplázate para ampliarlo, V acepta, Esc descarta y o intercambia extremos. Las teclas heredadas y/d permanecen en modo visual, a diferencia de yy/x en modo normal. Acepta con V y usa yy/x/dd en modo normal. Línea de comandos: Enter ejecuta, Esc cancela, Tab completa, flechas arriba/abajo para historial, izquierda/derecha y Home/End para cursor. Para todas las teclas de edición heredadas y comandos, ejecuta neofm -doc o consulta [lf documentation](lf-upstream/doc.txt).
+
+Se heredan las teclas de rueda del ratón, pero el ratón está desactivado por defecto.
 
 ## Arquitectura y validación
 

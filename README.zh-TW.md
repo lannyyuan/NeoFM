@@ -44,6 +44,28 @@ NeoFM 結合成熟的 **lf** 檔案管理員，以及從 Codex TUI 擷取的獨�
 | 文字 / 程式碼 | 有界文字渲染 | 原生檢視器 / 終端機閱讀器 |
 | PDF、Office、媒體 | 中繼資料與預覽提示 | 取決於外部應用程式的格式支援 |
 
+## SSH 遠端預覽 — 無需圖形桌面
+
+NeoFM 不只是本機檔案管理員，也是遠端文件瀏覽器。透過一般 SSH 在 Linux 伺服器執行，無需 X11 轉送、遠端桌面或下載檔案，即可完成導覽、檔案操作與大部分日常側欄預覽。渲染器在遠端執行，終端機顯示輸出。
+
+| 檔案類型 | SSH 即時側欄 |
+| :-- | :-- |
+| Markdown：標題、清單、表格、中日韓文字、程式碼區塊、公式與 Mermaid | 富文字渲染 |
+| UTF-8 文字、原始碼、JSON、記錄、HTML 原始碼 | 文字預覽 |
+| PNG、JPEG、GIF 首幀、WebP | 在渲染限制內使用 Sixel 或 ANSI 色塊 |
+| PDF、Office、媒體與壓縮檔 | 類型/大小或二進位中繼資料，非完整內容渲染 |
+
+Linux SSH 或無桌面工作階段中，Space 自動使用終端機閱讀備援（有 less 時使用 less -R -X），顯示已渲染 Markdown、有界文字或中繼資料。圖片在側欄渲染，閱讀器不提供放大圖形。完整 PDF/Office、渲染 HTML 與多媒體 Quick Look 需要合適的本機圖形檢視器。macOS 與 Windows 目前保留各自的 Space 綁定；此處自動 SSH 閱讀指 Linux。圖像自動偵測取決於終端機能力及轉送環境變數；tmux/screen 採 ANSI。僅在相容終端機強制 Sixel。輸出有限制，SSH 高解析度圖形的實際視覺效果尚未完整驗收。
+
+已透過實際 SSH 連線至 Linux 驗證 Markdown、公式/Mermaid、Sixel 幀輸出、ANSI 圖片及終端機閱讀路徑（見驗證記錄）。 [↗](docs/validation.md#ssh-preview-verification)
+
+~~~sh
+ssh user@linux-server
+neofm
+# Optional: reliable color-block preview in any compatible color terminal
+LFP_IMAGE_BACKEND=ansi neofm
+~~~
+
 ## NeoFM 實際運作展示
 
 [![Markdown 即時預覽 — 標題、清單與自適應表格。](assets/screenshots-r3/showcase/01-markdown.png)](assets/screenshots-r3/raw/01-markdown.png)
@@ -161,17 +183,74 @@ dd 使用系統 Windows PowerShell 5.1 與原生 Shell API 移至資源回收筒
 
 ## 快捷鍵
 
-| 按鍵 | 功能 | 按鍵 | 功能 |
-|:--|:--|:--|:--|
-| `h / j / k / l` | Vim 導覽 | `Space` | Quick Look |
-| `Enter` | 標記/取消標記檔案；進入目錄 | `Ctrl+Space` | 切換標記 |
-| `yy` | 複製 | `p` | 貼上 |
-| `x` | 剪下 | `dd` | 確認後移至垃圾桶 |
-| `o` | 外部開啟 | `zh` | 切換隱藏項目 |
-| `gg / G` | 首項 / 末項 | `/` | 搜尋 |
-| `r` | 重新命名 | `q` | 離開 |
+### 導覽與預覽
 
-已標記項目優先，否則操作目前檔案。dd 需要確認，垃圾桶不可用時不主動改為永久刪除。
+| 快捷鍵 | 功能 |
+| :-- | :-- |
+| `↑ / k · ↓ / j` | 向上/向下移動 |
+| `← / h` | 返回父目錄 |
+| `→ / l · Enter` | 進入目錄；一般檔案切換選取 |
+| `Home / gg · End / G` | 首項/末項 |
+| `Ctrl+U / Ctrl+D` | 向上/向下半頁 |
+| `PageUp / Ctrl+B · PageDown / Ctrl+F` | 向上/向下整頁 |
+| `Ctrl+Y / Ctrl+E` | 向上/向下捲動一行 |
+| `H / M / L` | 可見清單頂部/中間/底部 |
+| `gh` | 家目錄 |
+| `[ / ]` | 上一個/下一個目錄歷程 |
+| `Space` | 大型預覽 / 終端機閱讀 |
+| `o` | 使用外部應用程式開啟 |
+
+### 選取與檔案操作
+
+| 快捷鍵 | 功能 |
+| :-- | :-- |
+| `Ctrl+Space` | 切換目前項目選取 |
+| `u` | 取消所有目錄的選取（Unselect All） |
+| `v` | 反選目前目錄 |
+| `V` | 開始連續區域選取 |
+| `yy` | 複製檔案至 NeoFM 緩衝區 |
+| `x` | 剪下檔案至 NeoFM 緩衝區 |
+| `p` | 貼上至目前目錄 |
+| `c` | 清空複製/剪下緩衝區 |
+| `dd` | 確認後移至垃圾桶 |
+| `r` | 重新命名 |
+| `t` | 切換檔案標籤 |
+
+### 搜尋與歷程
+
+| 快捷鍵 | 功能 |
+| :-- | :-- |
+| `/ / ?` | 向前/向後搜尋檔名 |
+| `n / N` | 下一個/上一個搜尋結果 |
+| `f / F` | 向前/向後快速尋找檔名 |
+| `; / ,` | 下一個/上一個尋找結果 |
+| `m / ' / "` | 儲存/載入/刪除目錄書籤 |
+
+### 排序與顯示
+
+| 快捷鍵 | 功能 |
+| :-- | :-- |
+| `zh` | 切換隱藏項目 |
+| `zr` | 反轉排序 |
+| `zn / zs / zt / za` | 隱藏資訊 / 大小 / 時間 / 兩者 |
+| `sn / ss / st` | 依名稱 / 大小 / 修改時間排序 |
+| `sa / sb / sc / se` | 依存取 / 建立 / 狀態變更時間 / 副檔名排序 |
+| `Ctrl+L / Ctrl+R` | 重繪 / 重新載入 |
+
+### 命令與模式
+
+| 快捷鍵 | 功能 |
+| :-- | :-- |
+| `:` | 命令提示字元 |
+| `$ / % / ! / &` | Shell / 管線 / 等待 / 非同步 Shell |
+| `Ctrl+P / Ctrl+N` | 上一條/下一條命令歷程 |
+| `q` | 離開 |
+
+正常模式預設鍵位，區分大小寫。以 Enter 或 Ctrl+Space 選取多個檔案，按 yy（複製）或 x（剪下），進入目的目錄再按 p（貼上）。沒有選取時操作目前檔案；複製/剪下清除選取但保留內部檔案緩衝區。u 清除選取，c 清空緩衝區。yy 與 dd 為連續按兩次。dd 先確認並使用可恢復刪除助手，不主動改為永久刪除。Space 與 o 的檢視器依平台及工作階段而定。
+
+Visual Mode：V 開始範圍選取，移動游標擴展範圍，V 接受，Esc 捨棄，o 交換端點。Visual Mode 保留上游 y/d 複製/剪下，與正常模式 yy/x 不同；建議先以 V 接受，再回正常模式使用 yy/x/dd。命令列模式：Enter 執行、Esc 取消、Tab 補全、上下箭頭查歷程、左右箭頭及 Home/End 移動游標。完整繼承的命令列編輯鍵位與命令請執行 neofm -doc，或參閱 [lf documentation](lf-upstream/doc.txt).
+
+繼承滑鼠滾輪鍵位，但預設關閉滑鼠支援。
 
 ## 架構與驗證
 
