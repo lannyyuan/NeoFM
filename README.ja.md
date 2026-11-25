@@ -276,6 +276,15 @@ cargo test --locked --manifest-path lf-integration-poc/adapter/Cargo.toml
 
 ## 謝辞とライセンス
 
+NeoFM はオープンソースコミュニティの成果に支えられています。以下のプロジェクトのメンテナーとコントリビューターに心から感謝します。
+
+- [lf](https://github.com/gokcehan/lf) — gokcehan & contributors — ファイルマネージャーの基盤、ナビゲーション、ファイル操作。
+- [OpenAI Codex](https://github.com/openai/codex) — OpenAI & contributors — 抽出・適応した Markdown Writer、数式、Mermaid、端末画像レンダリングのコンポーネント。
+- [Ratatui](https://github.com/ratatui/ratatui) — Codex を通じて継承したコードを含む端末レンダリングの基盤。
+- [QL-Win QuickLook](https://github.com/QL-Win/QuickLook) / [Dzurkel](https://github.com/EdinUser/dzurkel) — それぞれ Windows と Linux のネイティブ大画面プレビュー連携（別途インストール）。
+
+また、以下を含む関連ライブラリのメンテナーにも感謝します。 [tcell](https://github.com/gdamore/tcell), [pulldown-cmark](https://crates.io/crates/pulldown-cmark), [syntect](https://crates.io/crates/syntect), [two-face](https://crates.io/crates/two-face), [image](https://crates.io/crates/image).
+
 [lf](https://github.com/gokcehan/lf)（MIT）と [OpenAI Codex](https://github.com/openai/codex)（Apache-2.0）の抽出コンポーネントを使用しています。QuickLook、Dzurkel は別途導入し、同梱しません。NeoFM は独立したプロジェクトです。[LICENSE](LICENSE)、[NOTICE](NOTICE)、[lf ライセンス](lf-upstream/LICENSE)、[UPSTREAM.md](UPSTREAM.md)、[ブランド素材](assets/brand/) を参照してください。
 
 <p align="center"><sub>小さなツール、明快なファイル、ネイティブプレビュー。</sub></p>

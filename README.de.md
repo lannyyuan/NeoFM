@@ -276,6 +276,15 @@ Die vereinheitlichten nativen Rust-Release-Builds auf Mac ARM64, Windows x64 und
 
 ## Danksagung und Lizenz
 
+NeoFM wäre ohne die Arbeit der Open-Source-Community nicht möglich. Herzlichen Dank an die Maintainer und Mitwirkenden dieser Projekte:
+
+- [lf](https://github.com/gokcehan/lf) — gokcehan & contributors — Grundlage des Dateimanagers, Navigation und Dateioperationen.
+- [OpenAI Codex](https://github.com/openai/codex) — OpenAI & contributors — Extrahierte und angepasste Komponenten für Markdown Writer, Formeln, Mermaid und Terminal-Bilddarstellung.
+- [Ratatui](https://github.com/ratatui/ratatui) — Grundlagen der Terminaldarstellung, einschließlich über Codex übernommenen Codes.
+- [QL-Win QuickLook](https://github.com/QL-Win/QuickLook) / [Dzurkel](https://github.com/EdinUser/dzurkel) — Native Großvorschau-Integration unter Windows bzw. Linux (separat installiert).
+
+Dank gilt auch den Maintainern unterstützender Bibliotheken, darunter [tcell](https://github.com/gdamore/tcell), [pulldown-cmark](https://crates.io/crates/pulldown-cmark), [syntect](https://crates.io/crates/syntect), [two-face](https://crates.io/crates/two-face), [image](https://crates.io/crates/image).
+
 Basiert auf [lf](https://github.com/gokcehan/lf) (MIT) und extrahierten Komponenten aus [OpenAI Codex](https://github.com/openai/codex) (Apache-2.0). QuickLook und Dzurkel werden separat installiert, nicht mitgeliefert. NeoFM ist eigenständig. Siehe [LICENSE](LICENSE), [NOTICE](NOTICE), [lf-Lizenz](lf-upstream/LICENSE), [UPSTREAM.md](UPSTREAM.md) und [Markenmaterial](assets/brand/).
 
 <p align="center"><sub>Kleine Werkzeuge. Klare Dateien. Native Vorschauen.</sub></p>

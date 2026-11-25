@@ -276,6 +276,15 @@ cargo test --locked --manifest-path lf-integration-poc/adapter/Cargo.toml
 
 ## 감사 및 라이선스
 
+NeoFM은 오픈 소스 커뮤니티의 성과에 기반합니다. 다음 프로젝트의 유지보수자와 기여자에게 진심으로 감사드립니다.
+
+- [lf](https://github.com/gokcehan/lf) — gokcehan & contributors — 파일 관리자 기반, 탐색 및 파일 작업.
+- [OpenAI Codex](https://github.com/openai/codex) — OpenAI & contributors — 추출하고 조정한 Markdown Writer, 수식, Mermaid 및 터미널 이미지 렌더링 구성 요소.
+- [Ratatui](https://github.com/ratatui/ratatui) — Codex를 통해 계승한 코드를 포함한 터미널 렌더링 기반.
+- [QL-Win QuickLook](https://github.com/QL-Win/QuickLook) / [Dzurkel](https://github.com/EdinUser/dzurkel) — 각각 Windows와 Linux의 네이티브 대형 미리보기 통합(별도 설치).
+
+다음 지원 라이브러리의 유지보수자에게도 감사드립니다: [tcell](https://github.com/gdamore/tcell), [pulldown-cmark](https://crates.io/crates/pulldown-cmark), [syntect](https://crates.io/crates/syntect), [two-face](https://crates.io/crates/two-face), [image](https://crates.io/crates/image).
+
 [lf](https://github.com/gokcehan/lf)(MIT)와 [OpenAI Codex](https://github.com/openai/codex)(Apache-2.0)의 추출 구성 요소를 사용합니다. QuickLook과 Dzurkel은 별도 설치이며 포함되지 않습니다. NeoFM은 독립 프로젝트입니다. [LICENSE](LICENSE), [NOTICE](NOTICE), [lf 라이선스](lf-upstream/LICENSE), [UPSTREAM.md](UPSTREAM.md), [브랜드 리소스](assets/brand/)를 참조하십시오.
 
 <p align="center"><sub>작은 도구, 명확한 파일, 네이티브 미리보기.</sub></p>

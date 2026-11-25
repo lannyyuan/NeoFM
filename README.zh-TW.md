@@ -276,6 +276,15 @@ cargo test --locked --manifest-path lf-integration-poc/adapter/Cargo.toml
 
 ## 致謝與授權
 
+NeoFM 離不開開源社群的長期累積。衷心感謝以下專案的維護者與貢獻者：
+
+- [lf](https://github.com/gokcehan/lf) — gokcehan & contributors — 檔案管理器的基礎、導覽與檔案操作。
+- [OpenAI Codex](https://github.com/openai/codex) — OpenAI & contributors — 擷取並適配的 Markdown Writer、數學公式、Mermaid 和終端影像渲染元件。
+- [Ratatui](https://github.com/ratatui/ratatui) — 終端渲染基礎，包括透過 Codex 繼承的程式碼。
+- [QL-Win QuickLook](https://github.com/QL-Win/QuickLook) / [Dzurkel](https://github.com/EdinUser/dzurkel) — 分別提供 Windows 和 Linux 的原生大視窗預覽整合（需獨立安裝）。
+
+同時感謝相關基礎函式庫的維護者，包括 [tcell](https://github.com/gdamore/tcell), [pulldown-cmark](https://crates.io/crates/pulldown-cmark), [syntect](https://crates.io/crates/syntect), [two-face](https://crates.io/crates/two-face), [image](https://crates.io/crates/image).
+
 基於 [lf](https://github.com/gokcehan/lf)（MIT）和 [OpenAI Codex](https://github.com/openai/codex)（Apache-2.0）的擷取元件。QuickLook、Dzurkel 獨立安裝，不隨儲存庫打包。NeoFM 是獨立專案。參閱 [LICENSE](LICENSE)、[NOTICE](NOTICE)、[lf 授權](lf-upstream/LICENSE)、[上游來源](UPSTREAM.md) 與 [品牌資源](assets/brand/)。
 
 <p align="center"><sub>小工具、清楚的檔案、原生的預覽。</sub></p>

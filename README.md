@@ -276,6 +276,15 @@ Unified native Rust releases passed four renderer smoke tests on Mac ARM64, Wind
 
 ## Credits and license
 
+NeoFM would not be possible without the work of the open-source community. A sincere thank you to the maintainers and contributors of these projects:
+
+- [lf](https://github.com/gokcehan/lf) — gokcehan & contributors — The file manager foundation, navigation and file operations.
+- [OpenAI Codex](https://github.com/openai/codex) — OpenAI & contributors — The extracted and adapted Markdown Writer, math, Mermaid and terminal image rendering components.
+- [Ratatui](https://github.com/ratatui/ratatui) — Terminal rendering foundations, including code inherited through Codex.
+- [QL-Win QuickLook](https://github.com/QL-Win/QuickLook) / [Dzurkel](https://github.com/EdinUser/dzurkel) — Native full-size preview integrations on Windows and Linux, respectively (installed separately).
+
+Thanks also to the maintainers of the supporting libraries, including [tcell](https://github.com/gdamore/tcell), [pulldown-cmark](https://crates.io/crates/pulldown-cmark), [syntect](https://crates.io/crates/syntect), [two-face](https://crates.io/crates/two-face), [image](https://crates.io/crates/image).
+
 Built on [lf](https://github.com/gokcehan/lf) (MIT) and extracted components of [OpenAI Codex](https://github.com/openai/codex) (Apache-2.0). QuickLook and Dzurkel are separately installed; not bundled. NeoFM is independent of upstream projects. See [LICENSE](LICENSE), [NOTICE](NOTICE), [lf license](lf-upstream/LICENSE), [UPSTREAM.md](UPSTREAM.md) and [brand assets](assets/brand/).
 
 <p align="center"><sub>Small tools. Clear files. Native previews.</sub></p>

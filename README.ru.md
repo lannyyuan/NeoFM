@@ -276,6 +276,15 @@ cargo test --locked --manifest-path lf-integration-poc/adapter/Cargo.toml
 
 ## Благодарности и лицензия
 
+NeoFM был бы невозможен без работы сообщества открытого ПО. Искренне благодарим сопровождающих и участников следующих проектов:
+
+- [lf](https://github.com/gokcehan/lf) — gokcehan & contributors — Основа файлового менеджера, навигация и файловые операции.
+- [OpenAI Codex](https://github.com/openai/codex) — OpenAI & contributors — Извлечённые и адаптированные компоненты Markdown Writer, формул, Mermaid и отрисовки изображений в терминале.
+- [Ratatui](https://github.com/ratatui/ratatui) — Основа терминального рендеринга, включая код, унаследованный через Codex.
+- [QL-Win QuickLook](https://github.com/QL-Win/QuickLook) / [Dzurkel](https://github.com/EdinUser/dzurkel) — Интеграции полноразмерного нативного предпросмотра в Windows и Linux соответственно (устанавливаются отдельно).
+
+Благодарим также сопровождающих вспомогательных библиотек, в том числе [tcell](https://github.com/gdamore/tcell), [pulldown-cmark](https://crates.io/crates/pulldown-cmark), [syntect](https://crates.io/crates/syntect), [two-face](https://crates.io/crates/two-face), [image](https://crates.io/crates/image).
+
 Основано на [lf](https://github.com/gokcehan/lf) (MIT) и компонентах [OpenAI Codex](https://github.com/openai/codex) (Apache-2.0). QuickLook и Dzurkel устанавливаются отдельно и не включены. NeoFM — независимый проект. См. [LICENSE](LICENSE), [NOTICE](NOTICE), [лицензию lf](lf-upstream/LICENSE), [UPSTREAM.md](UPSTREAM.md) и [материалы бренда](assets/brand/).
 
 <p align="center"><sub>Маленькие инструменты. Ясные файлы. Нативный предпросмотр.</sub></p>
