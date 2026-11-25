@@ -41,6 +41,7 @@ var (
 )
 
 func init() {
+	neofmInit()
 	if envOpener == "" {
 		envOpener = `start ""`
 	}

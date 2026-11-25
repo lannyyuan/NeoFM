@@ -5,7 +5,7 @@
 [English](README.md) · **简体中文** · [繁體中文](README.zh-TW.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Español](README.es.md) · [Português](README.pt.md) · [Italiano](README.it.md) · [Русский](README.ru.md)
 
 <p align="center">
-  <img alt="Version 0.2.1" src="https://img.shields.io/badge/version-0.2.1-171717?style=flat-square">
+  <img alt="Version 0.3.0" src="https://img.shields.io/badge/version-0.3.0-171717?style=flat-square">
   <img alt="macOS · Windows · Linux" src="https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-555555?style=flat-square">
   <img alt="Rust + Go" src="https://img.shields.io/badge/core-Rust%20%2B%20Go-444444?style=flat-square">
 </p>
@@ -125,7 +125,7 @@ command -v xdg-open
 git clone https://github.com/lannyyuan/NeoFM.git
 cd NeoFM
 powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1
-.\dist\NeoFM-win-x64\neofm.cmd
+.\dist\NeoFM-win-x64\neofm.exe
 ~~~
 
 **配置 QuickLook：** 启动器默认查找 %LOCALAPPDATA%\Programs\QuickLook\QuickLook.exe。其他安装方式可能使用不同路径。在 PowerShell 中设置并检查完整 EXE 路径，不存在则替换为实际路径：
@@ -137,7 +137,7 @@ Test-Path -LiteralPath $env:LFP_QUICKLOOK_EXE
 # Optional direct QuickLook test from the repository root (uncomment):
 # & $env:LFP_QUICKLOOK_EXE (Resolve-Path ".\dist\NeoFM-win-x64\samples\fixtures-quicklook\01 sample 中文.pdf").Path
 # Run from the NeoFM repository root:
-.\dist\NeoFM-win-x64\neofm.cmd
+.\dist\NeoFM-win-x64\neofm.exe
 ~~~
 
 CMD 对应方法：
@@ -146,15 +146,15 @@ CMD 对应方法：
 set "LFP_QUICKLOOK_EXE=%LOCALAPPDATA%\Programs\QuickLook\QuickLook.exe"
 if exist "%LFP_QUICKLOOK_EXE%" echo QuickLook OK
 where cmd.exe
-.\dist\NeoFM-win-x64\neofm.cmd
+.\dist\NeoFM-win-x64\neofm.exe
 ~~~
 
-**注意：** 始终通过 neofm.cmd 启动，不直接运行 lf.exe。启动器在自身进程内补齐 System32、ComSpec 和 PATHEXT，不修改全局 PATH。即使从 PowerShell 5.1 或 7.x 启动，lf 内部仍用 CMD。若 Space 变成标记而非预览，可能未加载自定义 lfrc；若出现 'exec: "cmd": executable file not found in %PATH%'，退出后通过启动器重启并检查 System32。先确认 QuickLook 能直接打开测试 PDF，再在 NeoFM 中对同一文件按 Space。诊断日志与 ANSI 降级：
+**注意：** 始终通过 neofm.exe 启动，不直接运行 lf.exe。启动器在自身进程内补齐 System32、ComSpec 和 PATHEXT，不修改全局 PATH。即使从 PowerShell 5.1 或 7.x 启动，lf 内部仍用 CMD。若 Space 变成标记而非预览，可能未加载自定义 lfrc；若出现 'exec: "cmd": executable file not found in %PATH%'，退出后通过启动器重启并检查 System32。先确认 QuickLook 能直接打开测试 PDF，再在 NeoFM 中对同一文件按 Space。诊断日志与 ANSI 降级：
 
 ~~~powershell
 Get-Content "$env:LOCALAPPDATA\LFpreview\data\lfwin.log" -Tail 30
 $env:LFP_IMAGE_BACKEND = "ansi"
-.\dist\NeoFM-win-x64\neofm.cmd
+.\dist\NeoFM-win-x64\neofm.exe
 ~~~
 
 dd 通过系统 Windows PowerShell 5.1 与 Shell API 调用回收站；用本地固定磁盘的临时文件确认。QuickLook 格式插件、编解码器及终端像素效果与核心功能分开。通用化路径仍待完整 GUI 回归，详见验收记录。
@@ -181,7 +181,7 @@ dd 通过系统 Windows PowerShell 5.1 与 Shell API 调用回收站；用本地
                    lf (Go)
              ┌──────────┴───────────┐
              │                      │
-    lfpreview (Rust)               Space
+    neofm-preview (Rust)               Space
        ┌─────┴─────┐                │
    Markdown      Images       Native preview
    Math/Mermaid  Sixel/ANSI   / terminal fallback

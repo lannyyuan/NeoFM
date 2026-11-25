@@ -44,6 +44,7 @@ var (
 )
 
 func init() {
+	neofmInit()
 	if envOpener == "" {
 		if runtime.GOOS == "darwin" {
 			envOpener = "open"

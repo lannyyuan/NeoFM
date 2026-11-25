@@ -26,6 +26,10 @@ To rerun:
 
     cargo test --locked --manifest-path lf-integration-poc/adapter/Cargo.toml
     INSTA_UPDATE=no cargo test --locked --manifest-path writer-poc/Cargo.toml --lib
-    python3 tests/smoke.py dist/neofm-macos-arm64/bin/lfpreview
+    python3 tests/smoke.py dist/neofm-macos-arm64/bin/neofm-preview
 
 The second command is expected to retain the three known host-adaptation failures until their semantics are resolved. Do not update snapshots just to make it green.
+
+## v0.3.0 native entry point / packaging
+
+The Go main executable was built on macOS for darwin/arm64, windows/amd64 and linux/amd64. The Linux binary was hash-verified on both target hosts. The existing verified renderer binaries were retained and renamed, not rebuilt. All four hosts activated v0.3.0 only after native PTY/ConPTY checks of Markdown preview, hidden/dotfile listing, recoverable-delete confirmation and cancellation, and normal exit. Windows also passed with restricted PATH and PATHEXT, and both neofm.exe and the legacy neofm.cmd returned v0.3.0. The old deployment was retained for rollback. This was a focused packaging regression, not a fresh graphical QuickLook/Dzurkel or full file-operation UAT. The gallery screenshots still document v0.2.1.

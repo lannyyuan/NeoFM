@@ -221,9 +221,10 @@ func printVersion() {
 }
 
 func main() {
+	defer neofmPrepare()()
 	flag.Usage = func() {
 		f := flag.CommandLine.Output()
-		fmt.Fprintf(f, `lf - Terminal file manager
+		fmt.Fprintf(f, `%s - Terminal file manager
 
 Usage: %s [options] [path]
 
@@ -232,7 +233,7 @@ Arguments:
     	set the initial directory or select the given file
 
 Options:
-`, os.Args[0])
+`, neofmProgramName(), os.Args[0])
 		flag.PrintDefaults()
 	}
 

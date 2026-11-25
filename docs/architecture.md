@@ -4,9 +4,9 @@ NeoFM preserves the lightweight lf navigation engine and adds an independent ren
 
     Terminal
        |
-    NeoFM launcher (platform config + isolated lf data)
-       |
-    lf (Go) ───── six-argument previewer ───── lfpreview (Rust)
+    neofm / neofm.exe (native Go executable)
+       |  built-in platform bootstrap + isolated lf data
+    lf navigation core ── six-argument previewer ── neofm-preview (Rust)
        |                                       |
        |                                       +-- extracted Codex Markdown Writer
        |                                       +-- bounded text / ANSI rendering
@@ -31,3 +31,7 @@ Build artifacts and device-specific runtime folders remain outside Git. The init
 - Windows external preview uses a configured QuickLook executable path. The portable profile generalizes the tested local path with LFP_QUICKLOOK_EXE.
 - Linux desktop requires a working Dzurkel and compatible Qt. Isolated-runtime provisioning is separate; no system Qt update is required by the core.
 - dd asks for confirmation, uses recoverable-delete APIs, and has no intentional permanent-delete command fallback. OS-native limitations still apply. No delete tests on user files.
+
+## Native product packaging (v0.3.0)
+
+The actual entry point is a Go binary named neofm (macOS/Linux) or neofm.exe (Windows). A build-tagged bootstrap initializes the environment and existing keymaps in-process. Windows retains neofm.cmd only as a compatibility shim. The renderer and trash helpers use the neofm-preview and neofm-trash names. The existing state directories remain unchanged to preserve user state; internal upstream module names and licenses remain intact.

@@ -5,7 +5,7 @@
 [English](README.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md) · [日本語](README.ja.md) · **한국어** · [Français](README.fr.md) · [Deutsch](README.de.md) · [Español](README.es.md) · [Português](README.pt.md) · [Italiano](README.it.md) · [Русский](README.ru.md)
 
 <p align="center">
-  <img alt="Version 0.2.1" src="https://img.shields.io/badge/version-0.2.1-171717?style=flat-square">
+  <img alt="Version 0.3.0" src="https://img.shields.io/badge/version-0.3.0-171717?style=flat-square">
   <img alt="macOS · Windows · Linux" src="https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-555555?style=flat-square">
   <img alt="Rust + Go" src="https://img.shields.io/badge/core-Rust%20%2B%20Go-444444?style=flat-square">
 </p>
@@ -125,7 +125,7 @@ Sixel을 지원하는 Windows Terminal, [QuickLook](https://github.com/QL-Win/Qu
 git clone https://github.com/lannyyuan/NeoFM.git
 cd NeoFM
 powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1
-.\dist\NeoFM-win-x64\neofm.cmd
+.\dist\NeoFM-win-x64\neofm.exe
 ~~~
 
 **QuickLook 설정:** 기본 경로는 %LOCALAPPDATA%\Programs\QuickLook\QuickLook.exe입니다. 설치 방법에 따라 다를 수 있습니다. PowerShell에서 EXE 전체 경로를 설정하고 확인하며 필요하면 실제 경로로 바꿉니다.
@@ -137,7 +137,7 @@ Test-Path -LiteralPath $env:LFP_QUICKLOOK_EXE
 # Optional direct QuickLook test from the repository root (uncomment):
 # & $env:LFP_QUICKLOOK_EXE (Resolve-Path ".\dist\NeoFM-win-x64\samples\fixtures-quicklook\01 sample 中文.pdf").Path
 # Run from the NeoFM repository root:
-.\dist\NeoFM-win-x64\neofm.cmd
+.\dist\NeoFM-win-x64\neofm.exe
 ~~~
 
 CMD에서의 방법:
@@ -146,15 +146,15 @@ CMD에서의 방법:
 set "LFP_QUICKLOOK_EXE=%LOCALAPPDATA%\Programs\QuickLook\QuickLook.exe"
 if exist "%LFP_QUICKLOOK_EXE%" echo QuickLook OK
 where cmd.exe
-.\dist\NeoFM-win-x64\neofm.cmd
+.\dist\NeoFM-win-x64\neofm.exe
 ~~~
 
-**중요:** lf.exe가 아니라 항상 neofm.cmd로 실행합니다. 실행기는 자체 프로세스에서 System32, ComSpec, PATHEXT를 보완하고 전역 PATH를 변경하지 않습니다. PowerShell 5.1 또는 7.x에서 시작해도 lf 내부 셸은 CMD입니다. Space가 미리보기 대신 표시를 토글하면 사용자 정의 lfrc가 로드되지 않았을 수 있습니다. 'exec: "cmd": executable file not found in %PATH%'가 나오면 실행기로 다시 시작하고 System32를 확인합니다. 먼저 테스트 PDF를 QuickLook으로 직접 연 뒤 같은 파일에서 Space를 시험합니다. 진단 로그와 ANSI 대체:
+**중요:** lf.exe가 아니라 항상 neofm.exe로 실행합니다. 실행기는 자체 프로세스에서 System32, ComSpec, PATHEXT를 보완하고 전역 PATH를 변경하지 않습니다. PowerShell 5.1 또는 7.x에서 시작해도 lf 내부 셸은 CMD입니다. Space가 미리보기 대신 표시를 토글하면 사용자 정의 lfrc가 로드되지 않았을 수 있습니다. 'exec: "cmd": executable file not found in %PATH%'가 나오면 실행기로 다시 시작하고 System32를 확인합니다. 먼저 테스트 PDF를 QuickLook으로 직접 연 뒤 같은 파일에서 Space를 시험합니다. 진단 로그와 ANSI 대체:
 
 ~~~powershell
 Get-Content "$env:LOCALAPPDATA\LFpreview\data\lfwin.log" -Tail 30
 $env:LFP_IMAGE_BACKEND = "ansi"
-.\dist\NeoFM-win-x64\neofm.cmd
+.\dist\NeoFM-win-x64\neofm.exe
 ~~~
 
 dd는 Windows PowerShell 5.1과 네이티브 Shell API를 사용합니다. 로컬 고정 드라이브의 일회용 파일로 확인합니다. QuickLook 형식 플러그인, 코덱 및 터미널 화질은 코어와 별개입니다. 일반화된 경로는 아직 전체 GUI 회귀 시험이 필요합니다.
@@ -181,7 +181,7 @@ dd는 Windows PowerShell 5.1과 네이티브 Shell API를 사용합니다. 로�
                    lf (Go)
              ┌──────────┴───────────┐
              │                      │
-    lfpreview (Rust)               Space
+    neofm-preview (Rust)               Space
        ┌─────┴─────┐                │
    Markdown      Images       Native preview
    Math/Mermaid  Sixel/ANSI   / terminal fallback

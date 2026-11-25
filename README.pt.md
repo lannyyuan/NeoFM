@@ -5,7 +5,7 @@
 [English](README.md) · [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md) · [日本語](README.ja.md) · [한국어](README.ko.md) · [Français](README.fr.md) · [Deutsch](README.de.md) · [Español](README.es.md) · **Português** · [Italiano](README.it.md) · [Русский](README.ru.md)
 
 <p align="center">
-  <img alt="Version 0.2.1" src="https://img.shields.io/badge/version-0.2.1-171717?style=flat-square">
+  <img alt="Version 0.3.0" src="https://img.shields.io/badge/version-0.3.0-171717?style=flat-square">
   <img alt="macOS · Windows · Linux" src="https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-555555?style=flat-square">
   <img alt="Rust + Go" src="https://img.shields.io/badge/core-Rust%20%2B%20Go-444444?style=flat-square">
 </p>
@@ -125,7 +125,7 @@ Instale Windows Terminal compatível com Sixel, [QuickLook](https://github.com/Q
 git clone https://github.com/lannyyuan/NeoFM.git
 cd NeoFM
 powershell -ExecutionPolicy Bypass -File .\scripts\build.ps1
-.\dist\NeoFM-win-x64\neofm.cmd
+.\dist\NeoFM-win-x64\neofm.exe
 ~~~
 
 **Configurar QuickLook:** o caminho padrão é %LOCALAPPDATA%\Programs\QuickLook\QuickLook.exe. Outros métodos de instalação podem usar caminhos diferentes. No PowerShell, defina e verifique o caminho completo do EXE, substituindo-o se necessário.
@@ -137,7 +137,7 @@ Test-Path -LiteralPath $env:LFP_QUICKLOOK_EXE
 # Optional direct QuickLook test from the repository root (uncomment):
 # & $env:LFP_QUICKLOOK_EXE (Resolve-Path ".\dist\NeoFM-win-x64\samples\fixtures-quicklook\01 sample 中文.pdf").Path
 # Run from the NeoFM repository root:
-.\dist\NeoFM-win-x64\neofm.cmd
+.\dist\NeoFM-win-x64\neofm.exe
 ~~~
 
 Equivalente no CMD:
@@ -146,15 +146,15 @@ Equivalente no CMD:
 set "LFP_QUICKLOOK_EXE=%LOCALAPPDATA%\Programs\QuickLook\QuickLook.exe"
 if exist "%LFP_QUICKLOOK_EXE%" echo QuickLook OK
 where cmd.exe
-.\dist\NeoFM-win-x64\neofm.cmd
+.\dist\NeoFM-win-x64\neofm.exe
 ~~~
 
-**Importante:** inicie sempre neofm.cmd, não lf.exe. O inicializador complementa System32, ComSpec e PATHEXT em seu próprio processo, sem alterar o PATH global. O shell interno de lf continua sendo CMD mesmo ao iniciar pelo PowerShell 5.1 ou 7.x. Se Space marcar um arquivo em vez de abrir a prévia, o lfrc personalizado talvez não tenha sido carregado. Se aparecer 'exec: "cmd": executable file not found in %PATH%', reinicie pelo inicializador e verifique System32. Abra primeiro um PDF de teste diretamente com QuickLook e depois teste Space no mesmo arquivo. Log de diagnóstico e alternativa ANSI:
+**Importante:** inicie sempre neofm.exe, não lf.exe. O inicializador complementa System32, ComSpec e PATHEXT em seu próprio processo, sem alterar o PATH global. O shell interno de lf continua sendo CMD mesmo ao iniciar pelo PowerShell 5.1 ou 7.x. Se Space marcar um arquivo em vez de abrir a prévia, o lfrc personalizado talvez não tenha sido carregado. Se aparecer 'exec: "cmd": executable file not found in %PATH%', reinicie pelo inicializador e verifique System32. Abra primeiro um PDF de teste diretamente com QuickLook e depois teste Space no mesmo arquivo. Log de diagnóstico e alternativa ANSI:
 
 ~~~powershell
 Get-Content "$env:LOCALAPPDATA\LFpreview\data\lfwin.log" -Tail 30
 $env:LFP_IMAGE_BACKEND = "ansi"
-.\dist\NeoFM-win-x64\neofm.cmd
+.\dist\NeoFM-win-x64\neofm.exe
 ~~~
 
 dd utiliza Windows PowerShell 5.1 e a API nativa do Shell; teste com um arquivo descartável em uma unidade fixa local. Plug-ins de formatos, codecs e fidelidade de imagem do terminal são separados do núcleo. O caminho generalizado ainda exige regressão GUI completa.
@@ -181,7 +181,7 @@ Arquivos marcados têm prioridade; caso contrário, a operação usa o arquivo a
                    lf (Go)
              ┌──────────┴───────────┐
              │                      │
-    lfpreview (Rust)               Space
+    neofm-preview (Rust)               Space
        ┌─────┴─────┐                │
    Markdown      Images       Native preview
    Math/Mermaid  Sixel/ANSI   / terminal fallback
